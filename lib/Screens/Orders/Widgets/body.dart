@@ -12,7 +12,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool? check1 = false;
+  bool  check1 = false;
   @override
   Widget build(BuildContext context) {
     return Padding(

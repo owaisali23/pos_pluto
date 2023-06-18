@@ -1,17 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UpdateInventory/updateinventory.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_auth/Models/productsModel.dart';
 
 class ItemCard extends StatelessWidget {
-  
-  // final Product product;
-  // final Function press;
-  // const ItemCard({
-  //   required this.product,
-  //   required this.press,
-  // Model file in Flutter extra folder
-  // });
-
+  final name;
+  final price;
+  ItemCard(String ?N, String ?P, {this.name, this.price});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -89,13 +88,12 @@ class ItemCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
               child: Text(
-                // products is out demo list
-                "Nike Zoom Fly 5",
+                name!=null? name:'Default Value',
                 style: TextStyle(color: Colors.black),
               ),
             ),
              Text(
-                "\$150.0",
+                price!=null? price:'Default Value',
                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black ),
               ),
             ],),
@@ -120,6 +118,7 @@ class ItemCard extends StatelessWidget {
         
         ),
       ),
-    );
+    ); 
+         
   }
 }

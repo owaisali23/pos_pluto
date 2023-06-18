@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/LoginEmploye/Widget/or_divider.dart';
+import 'package:flutter_auth/Services/logincontroller.dart';
+import 'package:get/get.dart';
+//import 'package:flutter_auth/Services/logincontroller.dart';
+//import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Widget/login_form.dart';
 
 class LoginEmployeeScreen extends StatelessWidget {
-  const LoginEmployeeScreen({Key? key}) : super(key: key);
+
+  //LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +50,11 @@ class LoginEmployeeScreen extends StatelessWidget {
              ),
             SizedBox(height: MediaQuery.of(context).size.height/10),
             Row(
-              children: const [
+              children:  [
                 Spacer(),
                 Expanded(
                   flex: 8,
-                  child: LoginForm(),
+                  child: LoginForm(LoginController),
                 ),
                 Spacer(),
               ],

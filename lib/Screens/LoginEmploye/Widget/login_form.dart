@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/AddEmploye/addemp.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
+import 'package:flutter_auth/Services/logincontroller.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants.dart';
 
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({
-    Key? key,
-  }) : super(key: key);
+
+ LoginController controller = Get.put(LoginController());
+
+   LoginForm(LoginController);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class LoginForm extends StatelessWidget {
            // keyboardType: TextInputType.emailAddress,
            // textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-           // onSaved: (email) {},
+            controller: controller.emailController.value,
             decoration: const InputDecoration(
               hintText: "Username , Email & Phone Number",
               prefixIcon: Padding(
@@ -44,7 +47,7 @@ class LoginForm extends StatelessWidget {
           ),
           SizedBox(height: MediaQuery.of(context).size.height/50),
           TextFormField(
-             // textInputAction: TextInputAction.done,
+              controller: controller.passwordController.value,
               obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: const InputDecoration(
@@ -67,14 +70,15 @@ class LoginForm extends StatelessWidget {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () {
-                  Navigator.push(
+                controller.LoginApi();
+                 /* Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) {
                   return Dashboard();
                 },
               ),
-             );
+             );*/
             },
               child: Text(
                 "Login".toUpperCase(),
