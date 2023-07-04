@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class AddEmp extends StatelessWidget {
-  const AddEmp({Key? key}) : super(key: key);
+  const AddEmp({Key key}) : super(key: key);
       AppBar buildAppBar() {
     return AppBar(
       title: 

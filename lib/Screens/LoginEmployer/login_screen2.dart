@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'Widget/login_form.dart';
 
 class LoginEmployerScreen extends StatelessWidget {
-  const LoginEmployerScreen({Key? key}) : super(key: key);
+  const LoginEmployerScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

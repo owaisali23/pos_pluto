@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_auth/Services/inventorycontroller.dart';
+import 'package:get/get.dart';
 
 class SalesCard extends StatelessWidget {
-  const SalesCard({Key? key}) : super(key: key);
+  var name;
+  int price;
+  SalesCard(this.name, this.price);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,7 @@ class SalesCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Receipt Number',
+                        name,
                         style: TextStyle(fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
                       ),
@@ -53,7 +57,7 @@ class SalesCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        '\$150.0',
+                        price.toString(),
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 8,),

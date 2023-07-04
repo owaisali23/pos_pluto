@@ -3,7 +3,7 @@ import 'package:flutter_auth/Screens/Dashboard/models.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ColumnChart2 extends StatelessWidget {
-  const ColumnChart2({Key? key}) : super(key: key);
+  const ColumnChart2({Key key}) : super(key: key);
  
 
   @override

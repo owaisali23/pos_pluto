@@ -16,7 +16,11 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return  Obx(() {
+    if(controller.isLoading.value == true){
+      return Center(child: CircularProgressIndicator());}
+     else{
+      return Form(
       child: Column(
         children: [
          Column(
@@ -85,8 +89,12 @@ class LoginForm extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
-    );
+        //   if(controller.isLoading == true)
+        //    Center(child: CircularProgressIndicator(),)
+        ],),   
+       );
+    }
+   },
+  );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/constants.dart';
 
 class Dropdown extends StatefulWidget {
-  const Dropdown({Key? key}) : super(key: key);
+  const Dropdown({Key key}) : super(key: key);
 
   @override
   State<Dropdown> createState() => _DropdownState();

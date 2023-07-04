@@ -8,9 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_auth/Models/productsModel.dart';
 
 class ItemCard extends StatelessWidget {
-  final name;
-  final price;
-  ItemCard(String ?N, String ?P, {this.name, this.price});
+  var name;
+  var price;
+  ItemCard(this.name, this.price);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +39,7 @@ class ItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [ 
                 AspectRatio(
-                aspectRatio: 0.83,
+                aspectRatio: 0.75,
                 child: Container(
                   //  width: 150,
                   //  height: 100,
@@ -82,38 +82,40 @@ class ItemCard extends StatelessWidget {
            ],),
           ), ),
          ),
-           Row(
-            children: [
-            Column(children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: Text(
-                name!=null? name:'Default Value',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-             Text(
-                price!=null? price:'Default Value',
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black ),
-              ),
-            ],),
-            Container(
-                height: 23,
-                width: 23,
-                decoration: BoxDecoration(
-                   color: kPrimaryLightColor,
-                     borderRadius: BorderRadius.circular(5),
-                   ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: Text(
-                      "5",
-                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.black ),
-                    ),
+        Row( 
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+              Column(children: [
+             // Padding(
+              //  padding: const EdgeInsets.symmetric(horizontal: 14),
+                Text( 
+                  name!=null? name:'Default Value',
+                  style: TextStyle(color: Colors.black, fontSize: 10),
                 ),
-              ),
-           ],)  
-            
+             // ),
+               Text(
+                  price!=null? price:'Default Value',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10 ),
+                ),
+              ],),
+             // SizedBox(width: 20),
+              Container(
+                  height: 23,
+                  width: 23,
+                  decoration: BoxDecoration(
+                     color: kPrimaryLightColor,
+                       borderRadius: BorderRadius.circular(5),
+                     ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    child: Text(
+                        "5",
+                        style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.black ),
+                      ),
+                  ),
+                ),
+             ],),
+
           ],
         
         ),

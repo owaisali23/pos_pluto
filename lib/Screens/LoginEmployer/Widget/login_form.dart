@@ -8,7 +8,7 @@ import '../../../constants.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override

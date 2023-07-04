@@ -4,7 +4,7 @@ import 'package:flutter_auth/constants.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CircularChart extends StatelessWidget {
-  const CircularChart({Key? key}) : super(key: key);
+  const CircularChart({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

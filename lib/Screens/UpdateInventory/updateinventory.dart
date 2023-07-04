@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class UpdateInventory extends StatelessWidget {
-  const UpdateInventory({Key? key}) : super(key: key);
+  const UpdateInventory({Key key}) : super(key: key);
     AppBar buildAppBar(BuildContext context) {
     return AppBar(
       title: 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/constants.dart';
 
 class AddNewPlaceCard extends StatelessWidget {
-  const AddNewPlaceCard({Key? key}) : super(key: key);
+  const AddNewPlaceCard({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

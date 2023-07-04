@@ -6,7 +6,7 @@ import 'package:flutter_auth/constants.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Line extends StatelessWidget {
-  const Line({Key? key}) : super(key: key);
+  const Line({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

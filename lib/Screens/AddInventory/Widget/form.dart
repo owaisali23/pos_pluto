@@ -7,7 +7,7 @@ import 'package:flutter_auth/constants.dart';
 
 
 class Addform extends StatelessWidget {
-  const Addform({Key? key}) : super(key: key);
+  const Addform({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

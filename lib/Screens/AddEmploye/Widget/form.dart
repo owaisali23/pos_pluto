@@ -6,7 +6,7 @@ import 'package:flutter_auth/constants.dart';
 
 
 class Addform extends StatelessWidget {
-  const Addform({Key? key}) : super(key: key);
+  const Addform({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -159,9 +159,9 @@ class Addform extends StatelessWidget {
     );
 
   Widget buildCircle({
-    required Widget child,
-    required double all,
-    required Color color,
+    /*required*/ Widget child,
+    /*required*/ double all,
+    /*required*/ Color color,
   }) =>
       ClipOval(
         child: Container(

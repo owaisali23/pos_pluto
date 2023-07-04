@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'Widgets/login_signup_btn.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen( {Key? key}) : super(key: key);
+  const WelcomeScreen( {Key key}) : super(key: key);
   //padding: EdgeInsets.all(MediaQuery.of(context).size.width/10),
   
   @override

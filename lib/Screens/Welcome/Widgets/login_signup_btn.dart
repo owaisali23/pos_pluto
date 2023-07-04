@@ -7,7 +7,7 @@ import '../../../constants.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
   const LoginAndSignupBtn({
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override

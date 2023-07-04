@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Saleshistory/Widgets/salescard.dart';
+import 'package:flutter_auth/Services/inventorycontroller.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/navdrawer.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SalesHistory extends StatefulWidget {
@@ -31,7 +33,7 @@ class SalesHistoryState extends State<SalesHistory> {
     HistoryModel('assets/images/Shoes.jpg', 'Received from', 'Salina',
         30.0, '08 May 2018','assets/images/Shoes.jpg'),
   ]; */
-
+    final InventoryController icontroller = Get.put(InventoryController());
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -108,19 +110,31 @@ class SalesHistoryState extends State<SalesHistory> {
                 ),
               ),
             ),
+             Obx(() {
+                    if(icontroller.isLoading.value == true){
+                    return Center(child: CircularProgressIndicator());}
+                    else{
+                   return 
             Expanded(
               child: ListView.builder(
-                  itemCount: 5,// histories.length,
+                  itemCount: icontroller.inventory.length,// histories.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return SalesCard(/*histories[index]*/);
+                    return SalesCard(icontroller.inventory[index].product.name, icontroller.inventory[index].price);
                   }),
-            ),
+            );
+              }
+              },),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
 AppBar buildAppBar() {
     return AppBar(
       title: 

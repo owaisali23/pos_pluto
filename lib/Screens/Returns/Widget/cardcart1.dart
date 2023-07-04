@@ -91,7 +91,7 @@ class _CartCard1State extends State<CartCard1> {
                          
                             //value returned when checkbox is clicked
                             setState(() {
-                               isChecked = value!;
+                               isChecked = value;
                             });
                         }
               ),

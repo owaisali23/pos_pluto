@@ -86,7 +86,7 @@ class _CartCardState extends State<CartCard> {
                         onChanged: (value){
                             //value returned when checkbox is clicked
                             setState(() {
-                                isChecked = value!;
+                                isChecked = value;
                             });
                         }
               ),

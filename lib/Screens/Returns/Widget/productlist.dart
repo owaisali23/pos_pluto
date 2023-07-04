@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_auth/Screens/Returns/Widget/checkoutlist.dart';
 
 class ProductList extends StatelessWidget {
-  const ProductList({Key? key}) : super(key: key);
+  const ProductList({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

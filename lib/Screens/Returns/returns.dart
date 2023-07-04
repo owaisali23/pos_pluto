@@ -7,7 +7,7 @@ import 'package:flutter_auth/navdrawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Returns extends StatelessWidget {
-  const Returns({Key? key}) : super(key: key);
+  const Returns({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:flutter_auth/Screens/Dashboard/models.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LineChart extends StatelessWidget {
-  const LineChart({Key? key}) : super(key: key);
+  const LineChart({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

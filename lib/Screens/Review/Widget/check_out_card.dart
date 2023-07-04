@@ -7,7 +7,7 @@ import '../../../constants.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override

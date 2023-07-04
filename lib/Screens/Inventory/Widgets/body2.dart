@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Inventory/Widgets/categories.dart';
+import 'package:flutter_auth/Services/productscontroller.dart';
 import 'package:flutter_auth/Screens/Inventory/Widgets/itemscard.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_auth/Models/productsModel.dart';
 
+
 class Body extends StatelessWidget {
- Future <productsModels> getproduct() async {
-   var authorization = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzRlMTM5OS1lMDNkLTQzN2EtYTY0YS0yYzhiMGJiMTlmMWIiLCJpYXQiOjE2ODcwMzI1NzUzMDcsImV4cCI6MTY4NzAzMjY2MTcwN30.L6XCFYCIzK0eO5abXe7vpa_7R7MVptgCP2v6KvSjg4uMipcguC_JsE9kK0_-T1a6CIzTJ-M8WLyrot8AUQQwKm3sbqKtUgxER6UdyHNc_ACh-eX4VRTWZMQ_HW9HfhcpBxD77__-ayFeZL4MlYQh8mLIjhPrkY79RaqN8Vj--JwSnnCREumHuDwS1tBKoyouccVv9t2VfVaEx4JH4FhrTXc5GkF3jePKi_DB71XY8JQBzJV3gYGFcmB1uXMvrDb1wT0rT1vBE12tHVEOXwhLQL6ffS3Fmn_a6rrKkB3TldswLwHheW70AKKg9Ww08CYs4UDxscBvOGXMka5UhBETEvNNK7d7wTikQFAQ5Y-BPtFeHmPTSaAfqpEDbHMX8IxfdRWtp_I_A2NhRni3Gzk-YIx__aEYmmtHSqDq6E025eTzhCIzn_N8jJnsiA92RRxn0R-XwiQ8VN5EWPUGgK1wkB-KgTNxl0up3Pcksaw5o7tCi_zIKkeGLdLOGhT1G105bjAnCD_aD9U8WCDwf2TpjzlxsV6se7m4lfebo3sMar7NlUGm2N8TkPO2zSmYMjutf1aksNA-a8_HC0M19XJkDf9nD2iOscjA2eMyNee-zYPwcU2cQCO7QrdgF6OPMI7JhSBYLzuI4dCfMk8M4GCYiek1NMYen0HldyyFg1ED198';
+ /*Future <productsModels> getproduct() async {
+   var authorization = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyZmNlMDNjOS05YjNkLTQyYjEtYjBmZC03YmZjMzgwYTE1NjQiLCJpYXQiOjE2ODcwODk5NDA5OTksImV4cCI6MTY4NzA5MDAyNzM5OX0.fIADtyenhLzfhi6DJEcWGPFYRnRWBYkUUAHfZWmkD6tQkU2_hIFI88bthIxqqMECzRu9-ObYGEzQmZGethTrJse0rZ9OTO1Utbdnl_uIRgZoVuGapuFHiRWiNOrS2z85TYT8hFoc4KKzswOjAvA4WthZbUHm8vrB3BeFSrA2UFz4pcE12D5ZIQ2Z9C1_nhqOks3vwtycbMlrdunzwaa1DJOE3qicE-7796f6HgplEDJcJa4DZySWEvUtI7VznN4F8SQabjz-gLELTMcjqBTN0zyiUxTbdshlUH9_8U_dJvNrME2vGNCOPQe5ca-UThaDLZhNQI16shmQfP0lyl-0J9HfPZ3Ps1AKglNPKZiQVetn-oL8YK2yGfjvDLMF2w6yOb5KFYgLzsuv4CmPJrrZb12F1qFlT2T9sjYDEyX3Zx9bqPYIpBeDF-u6C2ETmeU-G7qdOJZ2ARWh0airLi0urd-ATncEVJWgMmhZa_qM6qobAcDnmoUj1XmObZDAcnHpjghfAatame5CpbqxTnNp6tnBCSUoO7yyksIRxzBGE-m1VO4T4_mVJ0rHVxw0BmzusORSyhjVoLfIljOIqmUm4uUi5h5CL3OLUiAg9ieKaO0L7gR56vcCKMdu5MLTAoTGfuO_EpFCnzTxJmHWTC9qzCrTcW-oeCwkj8faT9ZqT6I';
    final response = await http.get(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/products'),
     headers: {
             'Authorization': authorization,
@@ -22,57 +23,59 @@ class Body extends StatelessWidget {
     else{
       return productsModels.fromJson(data);
     }
- }
+ } */
 
+ final ProductController controller = Get.put(ProductController());
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Text(
-            "Categories",
-            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.black ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Text(
+             "Categories",
+              style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.black ),
+            ),
+            
           ),
-        ),
-        SizedBox(height: 10),
-     FutureBuilder<productsModels>(
-      future: getproduct(),
-      builder: (context, snapshot){
-       if(snapshot.hasData){
-        return
-       // Categories(),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GridView.builder(
-                physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
-                itemCount: snapshot.data!.result!.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 0.75,
-                ),
-                itemBuilder: (context, index) => ItemCard(
-                      snapshot.data?.result?[index].name.toString(),
-                      snapshot.data?.result?[index].price.toString()
-                      
-                    )
-                    ),
-          ),
-        );        
-       }
-    else{
-     return Text("Loading");
-   }  
-     
-    }
-    ),
-      ],
-    );
+          SizedBox(height: 10),
+       //  FutureBuilder<productsModels>(
+      //  future: getproduct(),
+      //  builder: (context, snapshot){
+       // if(snapshot.hasData){
+        //  return //Text(snapshot.data.result[1].name.toString());
+        //  Categories(),
+          Expanded(
+            child:
+             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: 
+              Obx(() {
+                    if(controller.isLoading.value == true){
+                    return Center(child: CircularProgressIndicator());}
+                    else{
+                   return GridView.builder(
+                  physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
+                  itemCount: controller.productList.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                    childAspectRatio: 0.75,
+                  ),
+                  itemBuilder: (context, index) =>ItemCard( controller.productList[index].name,
+                    controller.productList[index].categoryName     
+                   ), 
+                  );
+                  }
+              },),
+                  
+              ),  
+            ), 
+        ], 
+      );
   }
 }

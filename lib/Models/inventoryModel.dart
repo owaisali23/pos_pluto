@@ -1,24 +1,22 @@
-import 'dart:convert';
-
-class ProductModel {
+class ProductResponse {
   bool success;
   int count;
   Pagination pagination;
-  List<Product> result;
+  List<ProductItem> result;
 
-  ProductModel({
+  ProductResponse({
     this.success,
     this.count,
     this.pagination,
     this.result,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
+  factory ProductResponse.fromJson(Map<String, dynamic> json) {
+    return ProductResponse(
       success: json['success'],
       count: json['count'],
       pagination: Pagination.fromJson(json['pagination']),
-      result: List<Product>.from(json['result'].map((x) => Product.fromJson(x))),
+      result: List<ProductItem>.from(json['result'].map((x) => ProductItem.fromJson(x))),
     );
   }
 }
@@ -39,6 +37,44 @@ class Pagination {
       currentPage: json['currentPage'],
       totalPages: json['totalPages'],
       limit: json['limit'],
+    );
+  }
+}
+
+class ProductItem {
+  String id;
+  int count;
+  int price;
+  int warranty;
+  String createdAt;
+  String updatedAt;
+  String storeId;
+  String productId;
+  Product product;
+
+  ProductItem({
+    this.id,
+    this.count,
+    this.price,
+    this.warranty,
+    this.createdAt,
+    this.updatedAt,
+    this.storeId,
+    this.productId,
+    this.product,
+  });
+
+  factory ProductItem.fromJson(Map<String, dynamic> json) {
+    return ProductItem(
+      id: json['id'],
+      count: json['count'],
+      price: json['price'],
+      warranty: json['warranty'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+      storeId: json['storeId'],
+      productId: json['productId'],
+      product: Product.fromJson(json['product']),
     );
   }
 }

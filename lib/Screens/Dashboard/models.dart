@@ -6,7 +6,7 @@ class ChartData {
 
   final String mobile;
   final double sale;
-  final Color? color;
+  final Color color;
 }
 
 class ChartDataInfo {
@@ -14,7 +14,7 @@ class ChartDataInfo {
 
   final String year;
   final double value;
-  final Color? color;
+  final Color color;
 }
 
 final List<ChartData> chartData = [
