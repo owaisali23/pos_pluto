@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Models/soldModel.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ class SoldController extends GetxController {
 
   var isLoading = true.obs;
   var sproducts = List<SoldProductItem>().obs;
+  var refreshController = RefreshController();
 
 void onInit(){
   fetchSoldproducts();
@@ -66,6 +68,16 @@ finally {
      
   // }
  }
+
+ void reloadSoldProduct() {
+    fetchSoldproducts();
+  }
+
+  @override
+  void dispose() {
+    refreshController.dispose(); // Dispose the RefreshController when done
+    super.dispose();
+  }
   
 }
 

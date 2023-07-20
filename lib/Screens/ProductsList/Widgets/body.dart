@@ -1,17 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Inventory/Widgets/categories.dart';
-import 'package:flutter_auth/Services/inventorycontroller.dart';
-import 'package:flutter_auth/Screens/Inventory/Widgets/itemscard.dart';
+import 'package:flutter_auth/Screens/Productslist/Widgets/itemscard.dart';
+import 'package:flutter_auth/Services/productscontroller.dart';
 import 'package:get/get.dart';
-import 'package:flutter_auth/Models/productsModel.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 
 class Body extends StatelessWidget {
 
- final InventoryController icontroller = Get.put(InventoryController());
+ final ProductController pcontroller = Get.put(ProductController());
  final RefreshController _refreshController = RefreshController();
 
   @override
@@ -41,19 +39,19 @@ class Body extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: 
               Obx(() {
-                    if(icontroller.isLoading.value == true){
+                    if(pcontroller.isLoading.value == true){
                     return Center(child: CircularProgressIndicator());}
                     else{
                    return SmartRefresher(
                           enablePullDown: true,
                           controller: _refreshController, // Use the separate RefreshController
                           onRefresh: () async {
-                            await icontroller.reloadinventoryProduct();
+                            await pcontroller.reloadinventoryProduct();
                             _refreshController.refreshCompleted();
                           },
                     child: GridView.builder(
                   physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
-                  itemCount: icontroller.inventory.length,
+                  itemCount: pcontroller.productList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 20,
@@ -61,13 +59,10 @@ class Body extends StatelessWidget {
                     childAspectRatio: 0.75,
                   ),
                   itemBuilder: (context, index) =>ItemCard( 
-                    icontroller.inventory[index].product.name,
-                    icontroller.inventory[index].product.categoryName,
-                     icontroller.inventory[index].product.imageUrl,
-                     icontroller.inventory[index].id,
-                     icontroller.inventory[index].count,
-                     icontroller.inventory[index].price
-
+                    pcontroller.productList[index].name,
+                    pcontroller.productList[index].categoryName,
+                    pcontroller.productList[index].imageUrl,
+                    pcontroller.productList[index].id
                    ), 
                   ),
               );

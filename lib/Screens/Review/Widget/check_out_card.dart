@@ -1,14 +1,84 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_auth/Models/productcartModel.dart';
+import 'package:flutter_auth/Services/CustomerInfocontroler.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants.dart';
 //import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
-  const CheckoutCard({
-    Key key,
-  }) : super(key: key);
+   
+  final List<Product> selectedProducts; // Assuming Product is a model class for your product data.
+  CheckoutCard({this.selectedProducts});
+
+  CustomerInfoController Ccontroller = Get.put(CustomerInfoController());
+  var isLoading = false.obs; 
+
+
+  void sendCheckoutRequest() async {
+  final String tokenKey = 'auth_token';
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString(tokenKey) ?? '';
+
+  if (selectedProducts.isEmpty) {
+    Get.snackbar("Error","No products selected");
+    return;
+  }
+
+  final List<Map<String, dynamic>> inventoryData = selectedProducts
+      .map((product) => {
+            'id': product.id,
+            'count': product.count,
+            'price': product.price,
+            'warranty': product.warranty,
+            'productId': product.productId,
+          })
+      .toList();
+
+  if (inventoryData.isEmpty) {
+    print("Inventory data is empty.");
+    return;
+  }
+
+  final Map<String, dynamic> requestBody = {
+    'name': Ccontroller.CustnameController.text,
+    'phone': Ccontroller.CustphoneController.text,
+    'inventoryData': inventoryData, 
+  };
+
+  isLoading(true);
+  final response = await http.post(
+    Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory/sell'),
+    headers: {
+      'Authorization': token,
+      'Content-Type': 'application/json'
+    },
+    body: jsonEncode(requestBody),
+  );
+
+  var data = jsonDecode(response.body);
+
+  if (response.statusCode == 200) {
+    print(jsonEncode(requestBody));
+    print(response.statusCode);
+    isLoading(false);
+    print("Checkout Successful");
+    Get.snackbar("SUCCESSFULL!", "Checkout Successful");
+    // Perform any additional actions after a successful checkout, if needed.
+  } else {
+    print(jsonEncode(requestBody));
+    print(response.body);
+    print("Checkout Failed");
+    isLoading(false);
+    Get.snackbar("Error", "Checkout failed. Please try again.");
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,28 +107,6 @@ class CheckoutCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           /* Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: /*getProportionateScreenWidth*/(40),
-                  width: /*getProportionateScreenWidth*/(40),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: SvgPicture.asset("assets/icons/receipt.svg"),
-                ),
-                Spacer(),
-                Text("Add voucher code"),
-                const SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kPrimaryColor,
-                )
-              ],
-            ),*/
             SizedBox(height: /*getProportionateScreenHeight*/(20)),
             Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +116,7 @@ class CheckoutCard extends StatelessWidget {
                            style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 14),
                         ),
                      Text( 
-                          'Sample Name',
+                          Ccontroller.CustnameController.text,
                            style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w500,fontSize: 14),
                         ),
                   ],
@@ -78,11 +126,11 @@ class CheckoutCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text( 
-                          'Customer Number',
+                          "Customer Phone Number",
                            style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 14),
                         ),
                      Text( 
-                          'Sample Number',
+                           Ccontroller.CustphoneController.text,
                            style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w500,fontSize: 14),
                         ),
                   ],
@@ -102,6 +150,11 @@ class CheckoutCard extends StatelessWidget {
                     ],
                   ),
                 ),
+            Obx(() {
+            if(isLoading.value == true){
+              return Center(child: CircularProgressIndicator());}
+            else{
+              return 
               SizedBox(
                   width: /*getProportionateScreenWidth*/(190),
                   child: TextButton(
@@ -111,7 +164,9 @@ class CheckoutCard extends StatelessWidget {
                    primary: Colors.white,
                    backgroundColor: kPrimaryColor,
                    ),
-              onPressed: (){},
+              onPressed: () {
+                sendCheckoutRequest();
+              },
               child: Text(
                "Checkout",
                style: TextStyle(
@@ -120,7 +175,10 @@ class CheckoutCard extends StatelessWidget {
               ),
              ),
            ),
-         ),
+         );
+           }
+        },
+        ),
          ],),
         ],
        ),

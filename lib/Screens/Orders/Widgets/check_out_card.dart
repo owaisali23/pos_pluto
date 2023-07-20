@@ -1,15 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Review/reviewscreen.dart';
+import 'package:flutter_auth/Services/CustomerInfocontroler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../constants.dart';
 import '../../../constants.dart';
 //import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
-  const CheckoutCard({
+   CheckoutCard({
     Key  key,
   }) : super(key: key);
+  CustomerInfoController Ccontroller = Get.put(CustomerInfoController());
+
+     void navigateToReviewScreen(BuildContext context) {
+    String custName = Ccontroller.CustnameController.text;
+    String custPhone = Ccontroller.CustphoneController.text;
+
+    if (custName.isEmpty || custPhone.isEmpty) {
+      // Show a dialog or a snackbar indicating that name and number are required.
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Missing Information"),
+            content: Text("Please add customer name and number."),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Both name and number are not empty, navigate to ReviewScreen.
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ReviewScreen()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +102,30 @@ class CheckoutCard extends StatelessWidget {
                           'Customer Name',
                            style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 14),
                         ),
-                     Text( 
-                          'Sample Name',
-                           style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w500,fontSize: 14),
-                        ),
+                    SizedBox(
+                  width: 200, // Adjust the width as needed
+                  child: TextFormField(
+                    controller: Ccontroller.CustnameController,
+                    style: GoogleFonts.lato(
+                      textStyle: TextStyle(color: kPrimaryColor),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Enter customer name',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                    // You can add controller and other properties if needed
+                  ),
+                ),
                   ],
                 ),
                 SizedBox(height: /*getProportionateScreenHeight*/(8)),
@@ -82,10 +136,32 @@ class CheckoutCard extends StatelessWidget {
                           'Customer Number',
                            style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 14),
                         ),
-                     Text( 
-                          'Sample Number',
-                           style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w500,fontSize: 14),
-                        ),
+                      SizedBox(
+                  width: 200, // Adjust the width as needed
+                  child: TextFormField(
+                    controller: Ccontroller.CustphoneController,
+                    style: GoogleFonts.lato(
+                      textStyle: TextStyle(color: kPrimaryColor),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Enter customer number',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
+                        
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                    // You can add controller and other properties if needed
+                  ),
+                ),
                   ],
                 ),  
             SizedBox(height: /*getProportionateScreenHeight*/(30)),      
@@ -112,14 +188,7 @@ class CheckoutCard extends StatelessWidget {
                    primary: Colors.white,
                    backgroundColor: kPrimaryColor,
                    ),
-              onPressed: () => {  Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return ReviewScreen();
-                },
-              ),
-             ),},
+              onPressed: () => navigateToReviewScreen(context),
               child: Text(
                "Review",
                style: TextStyle(

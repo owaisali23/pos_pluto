@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_auth/Screens/AddInventory/Widget/productimage.dart';
+import 'package:flutter_auth/Screens/AddProduct/Widget/productimage.dart';
 
-import 'package:flutter_auth/Screens/AddInventory/Widget/dropdown.dart';
+import 'package:flutter_auth/Screens/AddProduct/Widget/dropdown.dart';
 import 'package:flutter_auth/constants.dart';
 
 

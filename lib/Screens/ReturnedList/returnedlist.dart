@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Models/returnedlistModel.dart';
+import 'package:flutter_auth/Services/returnedcontroller.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../navdrawer.dart';
 
 class ReturnedProductScreen extends StatefulWidget {
@@ -9,37 +13,26 @@ class ReturnedProductScreen extends StatefulWidget {
 }
 
 class _ReturnedProductScreenState extends State<ReturnedProductScreen> {
-  List<String> returnedProducts = [
-    'Product 1',
-    'Product 2',
-    'Product 3',
-    'Product 4',
-    'Product 5',
-  ]; // Replace with actual returned products list
-
-  List<String> filteredProducts = [];
-
+  final ReturnedProductController rcontroller = Get.put(ReturnedProductController());
+  final RefreshController _refreshController = RefreshController();
   TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
 
   @override
   void initState() {
     super.initState();
-    filteredProducts = returnedProducts;
+    rcontroller.fetchReturnedProducts(); // Fetch the returned products from the controller
   }
 
   void _filterProducts(String searchTerm) {
-    filteredProducts = returnedProducts
-        .where((product) =>
-            product.toLowerCase().contains(searchTerm.toLowerCase()))
-        .toList();
+    rcontroller.filterProducts(searchTerm);
   }
 
   void _clearSearch() {
     setState(() {
       _searchController.clear();
-      filteredProducts = returnedProducts;
       _isSearching = false;
+      rcontroller.resetFilter();
     });
   }
 
@@ -69,8 +62,14 @@ class _ReturnedProductScreenState extends State<ReturnedProductScreen> {
                   ),
                 ),
               )
-            : Text('Returned Products',
-            style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.white),fontWeight:FontWeight.w600,fontSize: 18)),
+            : Text(
+                'Returned Products',
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(color: Colors.white),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                ),
+              ),
         actions: [
           IconButton(
             icon: Icon(Icons.search),
@@ -85,53 +84,97 @@ class _ReturnedProductScreenState extends State<ReturnedProductScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: filteredProducts.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            elevation: 4,
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: ListTile(
-              leading: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/Shoes.jpg'), // Replace with actual product image
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              title: Text(
-                filteredProducts[index],
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 4),
-                  Text(
-                    'Reason for Return',
-                    style: TextStyle(
-                      color: Colors.grey[600],
+      body: Container(
+        
+            child: Obx(
+              () {
+                if (rcontroller.isLoading.value) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return SmartRefresher(
+                          enablePullDown: true,
+                          controller: _refreshController, // Use the separate RefreshController
+                          onRefresh: () async {
+                            await rcontroller.reloadReturnedProducts();
+                            _refreshController.refreshCompleted();
+                          },
+                    child: ListView.builder(
+                      itemCount: rcontroller.filteredProducts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var product = rcontroller.filteredProducts[index];
+                        return Container(
+                          height: 100,
+                           decoration: BoxDecoration(
+                           color: Colors.white,
+                           borderRadius: BorderRadius.all( Radius.circular(10) ),
+                         boxShadow: [
+                          BoxShadow(
+                         offset: Offset(1, 3),
+                          blurRadius: 8,
+                         color: Color.fromARGB(255, 158, 154, 154).withOpacity(0.15),
+                     )
+                             ],
+                          )  ,
+                          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              ListTile(
+                                leading: Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    image: DecorationImage(
+                                      image: NetworkImage( rcontroller.filteredProducts[index].productDetails.imageUrl), // Replace with actual product image
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                title: Text(
+                                 product.productDetails.name,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 4),
+                                    Text(
+                                      'Price: \$${product.price.toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      'Count: ${product.count}',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      'Customer Name: ${product.customerName}',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                               
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Refund Amount: -\$50.00',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+            );
+                }
+              },
             ),
-          );
-        },
       ),
     );
   }

@@ -64,6 +64,11 @@ finally {
      
   // }
  }
+
+  void reloadinventoryProduct() {
+    fetchInventory();
+  }
+
   
 }
 

@@ -13,6 +13,15 @@ class Addform extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    empcontroller.isLoading.listen((isLoading) {
+      if (!isLoading) {
+        // Reset the text controllers to empty strings when isLoading is false
+        empcontroller.empnameController.value.clear();
+        empcontroller.empemailController.value.clear();
+        empcontroller.emppasswordController.value.clear();
+        empcontroller.emproleController.value.clear();
+      }
+    });
     return Obx(() {
     if(empcontroller.isLoading.value == true){
       return Center(child: CircularProgressIndicator());}

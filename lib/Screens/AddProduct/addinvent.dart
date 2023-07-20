@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/AddInventory/Widget/form.dart';
-import 'package:flutter_auth/Screens/AddInventory/Widget/productimage.dart';
-import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/Screens/AddProduct/Widget/form.dart';
+import 'package:flutter_auth/Screens/AddProduct/Widget/productimage.dart';
+import 'package:flutter_auth/Screens/AddProduct/Widget/form.dart';
 import 'package:flutter_auth/navdrawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../constants.dart';
 
-class AddInventory extends StatelessWidget {
-  const AddInventory({Key key}) : super(key: key);
+
+class AddProduct extends StatelessWidget {
+  const AddProduct({Key key}) : super(key: key);
     AppBar buildAppBar() {
     return AppBar(
       title: 
@@ -19,7 +21,7 @@ class AddInventory extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Add Inventory",
+                    "Add Product",
                     style: GoogleFonts.lato(textStyle:TextStyle(color: Color.fromARGB(255, 255, 255, 255)),fontWeight:FontWeight.w600,fontSize: 18)
                   ),
                 ],

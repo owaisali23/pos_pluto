@@ -47,7 +47,8 @@ class AddEmp extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset : false,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      drawer: NavDrawer(),
+      drawer:
+       NavDrawer(),
       appBar: buildAppBar(),
       /* AppBar(
         backgroundColor: Colors.transparent,

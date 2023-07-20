@@ -9,10 +9,17 @@ import 'package:flutter_auth/Models/productsModel.dart';
 
 class ItemCard extends StatelessWidget {
   var name;
-  var price;
-  ItemCard(this.name, this.price);
+  var category;
+  String imageUrl;
+  String id;
+  int count;
+  int price;
+
+
+  ItemCard(this.name, this.category, this.imageUrl, this.id, this.count, this.price );
   @override
   Widget build(BuildContext context) {
+    String image = "http://" + imageUrl;
     return Padding(
       padding: const EdgeInsets.only(top: 10,bottom: 10, right: 2,left: 2),
       child: Container(
@@ -45,10 +52,10 @@ class ItemCard extends StatelessWidget {
                   //  height: 100,
                   //  padding: EdgeInsets.all(/*getProportionateScreenWidth*/(10)),
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                    fit: BoxFit.fitWidth,
-                    image:new AssetImage('assets/images/Shoes.jpg'),
-                    ),
+                  image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(image),
+                   ),
                    // color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -85,19 +92,29 @@ class ItemCard extends StatelessWidget {
         Row( 
           mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-              Column(children: [
-             // Padding(
-              //  padding: const EdgeInsets.symmetric(horizontal: 14),
-                Text( 
-                  name!=null? name:'Default Value',
-                  style: TextStyle(color: Colors.black, fontSize: 10),
-                ),
-             // ),
-               Text(
-                  price!=null? price:'Default Value',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10 ),
-                ),
-              ],),
+              Padding(
+                padding: const EdgeInsets.only(left:6.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                           // Padding(
+                //  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  Text( 
+                    name,
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12),
+                  ),
+                           // ),
+                 Text(
+                    category,
+                    style: TextStyle( color: Colors.black, fontSize: 11 ),
+                  ),
+                  Text(
+                    "Rs:" + price.toString() + "/-",
+                    style: TextStyle( fontWeight: FontWeight.bold,color: Colors.black, fontSize: 11 ),
+                  ),
+                ],),
+              ),
              // SizedBox(width: 20),
               Container(
                   height: 23,
@@ -109,7 +126,7 @@ class ItemCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     child: Text(
-                        "5",
+                        count.toString(),
                         style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.black ),
                       ),
                   ),

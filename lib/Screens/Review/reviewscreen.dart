@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Review/Widget/body.dart';
 import 'package:flutter_auth/Screens/Review/Widget/check_out_card.dart';
+import 'package:flutter_auth/Services/cartcontroller.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Models/productcartModel.dart';
 import '../../navdrawer.dart';
 //import 'package:shop_app/models/Cart.dart';
 
 
 class ReviewScreen extends StatelessWidget {
+   final CartController _cartController = Get.put(CartController());
+    final List<Product> selectedProducts;
+    ReviewScreen({ this.selectedProducts});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,7 @@ class ReviewScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Body(),
-      bottomNavigationBar: CheckoutCard(),
+      bottomNavigationBar: CheckoutCard(selectedProducts: _cartController.selectedProducts),
     );
   }
 }

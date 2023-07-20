@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/AddEmploye/addemp.dart';
-import 'package:flutter_auth/Screens/AddInventory/addinvent.dart';
+import 'package:flutter_auth/Screens/AddProduct/addinvent.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
 import 'package:flutter_auth/Screens/Employees/employeeslist.dart';
 import 'package:flutter_auth/Screens/Inventory/inventoryscreen.dart';

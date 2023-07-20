@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/AddEmploye/addemp.dart';
-import 'package:flutter_auth/Screens/AddInventory/addinvent.dart';
+import 'package:flutter_auth/Screens/AddProduct/addinvent.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
 import 'package:flutter_auth/Screens/Employees/employeeslist.dart';
 import 'package:flutter_auth/Screens/Inventory/inventoryscreen.dart';
 import 'package:flutter_auth/Screens/Orders/orders.dart';
+import 'package:flutter_auth/Screens/ProductsList/productList.dart';
 import 'package:flutter_auth/Screens/ReturnedList/returnedlist.dart';
 import 'package:flutter_auth/Screens/Returns/returns.dart';
 import 'package:flutter_auth/Screens/Saleshistory/saleshistory.dart';
@@ -78,6 +79,18 @@ class NavDrawer extends StatelessWidget {
               ),
              }
             ),
+             ListTile(
+                leading: Icon(Icons.inventory),
+                title: Text('Products List / Add Products to Inventory'),
+                onTap: () => {  Navigator.push(
+               context,
+               MaterialPageRoute(
+                builder: (context) {
+                  return Productslist();},
+               ),
+              ),
+             }
+            ),
               ListTile(
                 leading: Icon(Icons.add_box),
                 title: Text('Add Product'),
@@ -86,85 +99,85 @@ class NavDrawer extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return AddInventory();
+                  return AddProduct();
                 },
               ),
              ),
             },
               ),
 
-             ListTile(
-                leading: Icon(Icons.update),
-                title: Text('Update Inventory'),
-                onTap: () => {
-                showDialog(
-                 context: context,
-                 builder: (context) {
-                  return AlertDialog(
-                    insetPadding: EdgeInsets.zero,
-                   contentPadding: EdgeInsets.all(10),
-                    shape: RoundedRectangleBorder(
-                     borderRadius:
-                     BorderRadius.all(
-                     Radius.circular(10.0))),
-                  //  insetPadding: EdgeInsets.all(60),
-                    scrollable: true,
-                    title: Text('Update Inventory:'),
-                    content: Column(
-                      children: [
-                        Container(
-                          height: 200,
-                          width: 350,
-                          padding: const EdgeInsets.only(top:10, right: 10, left: 10),
-                          margin: EdgeInsets.only(top: 20),
-                          child: Form(
-                            child: Column(
-                              children: <Widget>[
-                                TextFormField(
-                                 decoration: InputDecoration(
-                                 hintText: "Product Category",
-                                icon: Icon(Icons.category),
-                                  ),
-                                ),
-                                SizedBox(height: 20),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: 'Product Name',
-                                    icon: Icon(Icons.shop_rounded),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),  
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Center(
-                          child: SizedBox(
-                           height: 50,
-                           width: 200,
-                            child: ElevatedButton(
-                                child: Text("Done"),
-                                onPressed: () {
-                                Navigator.push(
-                                 context,
-                                 MaterialPageRoute(
-                                  builder: (context) {
-                                  return UpdateInventory();
-                                  },),
-                                 );}
-                                ),
-                               ),),
-                              ),
-                     ],
-                    ),
-                  );
-                }),
-             },
-              ), 
+            //  ListTile(
+            //     leading: Icon(Icons.update),
+            //     title: Text('Create Inventory'),
+            //     onTap: () => {
+            //     showDialog(
+            //      context: context,
+            //      builder: (context) {
+            //       return AlertDialog(
+            //         insetPadding: EdgeInsets.zero,
+            //        contentPadding: EdgeInsets.all(10),
+            //         shape: RoundedRectangleBorder(
+            //          borderRadius:
+            //          BorderRadius.all(
+            //          Radius.circular(10.0))),
+            //       //  insetPadding: EdgeInsets.all(60),
+            //         scrollable: true,
+            //         title: Text('Create Inventory:'),
+            //         content: Column(
+            //           children: [
+            //             Container(
+            //               height: 200,
+            //               width: 350,
+            //               padding: const EdgeInsets.only(top:10, right: 10, left: 10),
+            //               margin: EdgeInsets.only(top: 20),
+            //               child: Form(
+            //                 child: Column(
+            //                   children: <Widget>[
+            //                     TextFormField(
+            //                      decoration: InputDecoration(
+            //                      hintText: "Product Category",
+            //                     icon: Icon(Icons.category),
+            //                       ),
+            //                     ),
+            //                     SizedBox(height: 20),
+            //                     TextFormField(
+            //                       decoration: InputDecoration(
+            //                         labelText: 'Product Name',
+            //                         icon: Icon(Icons.shop_rounded),
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             ),  
+            //           Padding(
+            //             padding: const EdgeInsets.all(15.0),
+            //             child: Center(
+            //               child: SizedBox(
+            //                height: 50,
+            //                width: 200,
+            //                 child: ElevatedButton(
+            //                     child: Text("Done"),
+            //                     onPressed: () {
+            //                     Navigator.push(
+            //                      context,
+            //                      MaterialPageRoute(
+            //                       builder: (context) {
+            //                       return UpdateInventory();
+            //                       },),
+            //                      );}
+            //                     ),
+            //                    ),),
+            //                   ),
+            //          ],
+            //         ),
+            //       );
+            //     }),
+            //  },
+            //   ), 
               ListTile(
                 leading: Icon(Icons.history),
-                title: Text('Sales History'),
+                title: Text('Sales History/Return Product'),
                 onTap: () => {
                   Navigator.push(
               context,
@@ -202,77 +215,77 @@ class NavDrawer extends StatelessWidget {
               ),
              },
               ),
-              ListTile(
-                leading: Icon(Icons.assignment_return),
-                title: Text('Return Product'),
-                onTap: () => {
-                showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    insetPadding: EdgeInsets.zero,
-                   contentPadding: EdgeInsets.all(10),
-                    shape: RoundedRectangleBorder(
-                     borderRadius:
-                     BorderRadius.all(
-                     Radius.circular(10.0))),
-                  //  insetPadding: EdgeInsets.all(60),
-                    scrollable: true,
-                    title: Text('Product Returns:'),
-                    content: Column(
-                      children: [
-                        Container(
-                          height: 200,
-                          width: 350,
-                          padding: const EdgeInsets.only(top:10, right: 10, left: 10),
-                          margin: EdgeInsets.only(top: 20),
-                          child: Form(
-                            child: Column(
-                              children: <Widget>[
-                                TextFormField(
-                                 decoration: InputDecoration(
-                                 hintText: "Customer Name",
-                                icon: Icon(Icons.account_box),
-                                  ),
-                                ),
-                                SizedBox(height: 20),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: 'Receipt Number',
-                                    icon: Icon(Icons.receipt),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),  
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Center(
-                          child: SizedBox(
-                           height: 50,
-                           width: 200,
-                            child: ElevatedButton(
-                                child: Text("Submit"),
-                                onPressed: () {
-                                Navigator.push(
-                                 context,
-                                 MaterialPageRoute(
-                                  builder: (context) {
-                                  return Returns();
-                                  },),
-                                 );}
-                                ),
-                               ),),
-                              ),
+              // ListTile(
+              //   leading: Icon(Icons.assignment_return),
+              //   title: Text('Return Product'),
+              //   onTap: () => {
+              //   showDialog(
+              //   context: context,
+              //   builder: (context) {
+              //     return AlertDialog(
+              //       insetPadding: EdgeInsets.zero,
+              //      contentPadding: EdgeInsets.all(10),
+              //       shape: RoundedRectangleBorder(
+              //        borderRadius:
+              //        BorderRadius.all(
+              //        Radius.circular(10.0))),
+              //     //  insetPadding: EdgeInsets.all(60),
+              //       scrollable: true,
+              //       title: Text('Product Returns:'),
+              //       content: Column(
+              //         children: [
+              //           Container(
+              //             height: 200,
+              //             width: 350,
+              //             padding: const EdgeInsets.only(top:10, right: 10, left: 10),
+              //             margin: EdgeInsets.only(top: 20),
+              //             child: Form(
+              //               child: Column(
+              //                 children: <Widget>[
+              //                   TextFormField(
+              //                    decoration: InputDecoration(
+              //                    hintText: "Customer Name",
+              //                   icon: Icon(Icons.account_box),
+              //                     ),
+              //                   ),
+              //                   SizedBox(height: 20),
+              //                   TextFormField(
+              //                     decoration: InputDecoration(
+              //                       labelText: 'Receipt Number',
+              //                       icon: Icon(Icons.receipt),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ),  
+              //         Padding(
+              //           padding: const EdgeInsets.all(15.0),
+              //           child: Center(
+              //             child: SizedBox(
+              //              height: 50,
+              //              width: 200,
+              //               child: ElevatedButton(
+              //                   child: Text("Submit"),
+              //                   onPressed: () {
+              //                   Navigator.push(
+              //                    context,
+              //                    MaterialPageRoute(
+              //                     builder: (context) {
+              //                     return Returns();
+              //                     },),
+              //                    );}
+              //                   ),
+              //                  ),),
+              //                 ),
 
-                     ],
-                    ),
-                  );
-                }),
+            //          ],
+            //         ),
+            //       );
+            //     }),
                   
-             },
-            ),
+            //  },
+            // ),
             ListTile(
                 leading: Icon(Icons.arrow_back_sharp),
                 title: Text('Returned Products List'),

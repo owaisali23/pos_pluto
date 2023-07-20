@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Review/Widget/button.dart';
 import 'package:flutter_auth/Screens/Review/Widget/cardcart.dart';
+import 'package:flutter_auth/Screens/Review/Widget/check_out_card.dart';
+import 'package:flutter_auth/Services/cartcontroller.dart';
 
-import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //import '../../../size_config.dart';
 
-class Body extends StatefulWidget {
+class Body extends StatelessWidget {
+  final CartController _cartController = Get.put(CartController());
+  
   @override
-  _BodyState createState() => _BodyState();
-}
 
-class _BodyState extends State<Body> {
-  @override
   Widget build(BuildContext context) {
-    return Padding(
+   return Padding(
     padding:
      EdgeInsets.symmetric(horizontal: /*getProportionateScreenWidth*/(20)),
       child: Column(
@@ -31,16 +30,31 @@ class _BodyState extends State<Body> {
              style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 18),
         ),
          ), 
-           ListView.builder(
+        // CheckoutCard(selectedProducts: _cartController.selectedProducts),
+         Obx(() {
+             return ListView.builder(
             physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
             shrinkWrap: true,
-            itemCount: 3,//demoCarts.length,
+            itemCount: _cartController.selectedProducts.length,//demoCarts.length,
             itemBuilder: (context, index) => Container(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: 
-              CartCard(/*cart: demoCarts[index]*/),
+              CartCard(_cartController.selectedProducts[index].name,
+                       _cartController.selectedProducts[index].type,
+                       _cartController.selectedProducts[index].price,
+                      _cartController.selectedProducts[index].count,
+                       _cartController.selectedProducts[index].id,
+                       _cartController.selectedProducts[index].productId,
+                       _cartController.selectedProducts[index].warranty,
+                       _cartController.selectedProducts[index].imageUrl
+
+                      // _cartController.selectedProducts[index].custname,
+                      // _cartController.selectedProducts[index].phone,
+                       
+              ),
              ),
-            ),
+            );
+           },), 
         ]),  
         ),
       ],),

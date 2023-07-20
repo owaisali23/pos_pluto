@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Inventory/Widgets/body2.dart';
+import 'package:flutter_auth/Screens/ProductsList/Widgets/body.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/navdrawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Inventory extends StatelessWidget {
+class Productslist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class Inventory extends StatelessWidget {
                 children: 
      [
                   Text(
-                    "Inventory",
+                    "Products List",
                     style: GoogleFonts.lato(textStyle:TextStyle(color: Color.fromARGB(255, 255, 255, 255)),fontWeight:FontWeight.w600,fontSize: 16)
                   ),
                 ],
