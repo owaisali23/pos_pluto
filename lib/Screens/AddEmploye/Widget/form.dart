@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Services/addempcontroller.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_auth/Screens/AddEmploye/Widget/dropdown.dart';
@@ -6,11 +8,16 @@ import 'package:flutter_auth/constants.dart';
 
 
 class Addform extends StatelessWidget {
-  const Addform({Key key}) : super(key: key);
+   Addform({Key key}) : super(key: key);
+  AddempController empcontroller = Get.put(AddempController());
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Obx(() {
+    if(empcontroller.isLoading.value == true){
+      return Center(child: CircularProgressIndicator());}
+     else{
+      return  Container(
       child: Padding(
        padding: const EdgeInsets.only(left: 40, right: 40),
       child: Form(    
@@ -46,9 +53,10 @@ class Addform extends StatelessWidget {
              // keyboardType: TextInputType.emailAddress,
              // textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
+              controller: empcontroller.empnameController.value,
              // onSaved: () {},
               decoration: const InputDecoration(
-                hintText: "Username (with copany preset)",
+                hintText: "Name",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.person_add_alt_sharp),
@@ -58,10 +66,10 @@ class Addform extends StatelessWidget {
             SizedBox(height: 20),
              TextFormField(
                // textInputAction: TextInputAction.done,
-                obscureText: true,
+               controller: empcontroller.empemailController.value,
                 cursorColor: kPrimaryColor,
                 decoration: const InputDecoration(
-                  hintText: "Name",
+                  hintText: "Employee Email",
                   prefixIcon: Padding(
                     padding: EdgeInsets.all(defaultPadding),
                     child: Icon(Icons.person),
@@ -72,6 +80,8 @@ class Addform extends StatelessWidget {
             TextFormField(
              // keyboardType: TextInputType.emailAddress,
              // textInputAction: TextInputAction.next,
+             controller: empcontroller.emppasswordController.value,
+             obscureText: true,
               cursorColor: kPrimaryColor,
              // onSaved: () {},
               decoration: const InputDecoration(
@@ -87,9 +97,10 @@ class Addform extends StatelessWidget {
              // keyboardType: TextInputType.emailAddress,
              // textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
+              controller: empcontroller.emproleController.value,
              // onSaved: () {},
               decoration: const InputDecoration(
-                hintText: "Position",
+                hintText: "Employee Role",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.supervisor_account_outlined),
@@ -121,7 +132,9 @@ class Addform extends StatelessWidget {
                  borderRadius: BorderRadius.circular(10), // <-- Radius
                 ),
               ), 
-              onPressed: () {},
+              onPressed: () {
+                empcontroller.AddempApi();
+              },
                child: Padding(
                  padding: const EdgeInsets.only(left: 100.0),
                  child: Row(
@@ -141,6 +154,9 @@ class Addform extends StatelessWidget {
        ),
       ),
     );
+    }
+   },
+  );
   }
 }
 

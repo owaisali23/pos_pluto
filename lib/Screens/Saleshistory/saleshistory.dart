@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Saleshistory/Widgets/salescard.dart';
-import 'package:flutter_auth/Services/inventorycontroller.dart';
+import 'package:flutter_auth/Services/soldcontroller.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/navdrawer.dart';
 import 'package:get/get.dart';
@@ -33,7 +33,8 @@ class SalesHistoryState extends State<SalesHistory> {
     HistoryModel('assets/images/Shoes.jpg', 'Received from', 'Salina',
         30.0, '08 May 2018','assets/images/Shoes.jpg'),
   ]; */
-    final InventoryController icontroller = Get.put(InventoryController());
+  final SoldController scontroller = Get.put(SoldController());
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -111,15 +112,15 @@ class SalesHistoryState extends State<SalesHistory> {
               ),
             ),
              Obx(() {
-                    if(icontroller.isLoading.value == true){
+                    if(scontroller.isLoading.value == true){
                     return Center(child: CircularProgressIndicator());}
                     else{
                    return 
             Expanded(
               child: ListView.builder(
-                  itemCount: icontroller.inventory.length,// histories.length,
+                  itemCount: scontroller.sproducts.length,// histories.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return SalesCard(icontroller.inventory[index].product.name, icontroller.inventory[index].price);
+                    return SalesCard(scontroller.sproducts[index].product.name, scontroller.sproducts[index].price);
                   }),
             );
               }
@@ -155,17 +156,6 @@ AppBar buildAppBar() {
           ),
       centerTitle: true,    
       backgroundColor: kPrimaryColor,
-     /* elevation: 0,
-      actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Icon(
-            Icons.search,
-            size: 24,
-            color: Colors.white ,
-          ),
-        ),
-     //   SizedBox(width: 20 / 2)
-      ],*/
+
     );
 }

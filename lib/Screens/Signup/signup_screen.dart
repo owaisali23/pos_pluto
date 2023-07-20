@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Services/logincontroller.dart';
+import 'package:flutter_auth/Screens/Signup/Widget/signup_form.dart';
+import 'package:flutter_auth/Services/signupcontroller.dart';
 import 'package:get/get.dart';
-//import 'package:flutter_auth/Services/logincontroller.dart';
-//import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
-import 'Widget/login_form.dart';
-
-class LoginEmployeeScreen extends StatelessWidget {
-
-  //LoginController controller = Get.put(LoginController());
+class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +43,13 @@ class LoginEmployeeScreen extends StatelessWidget {
                   
                ],
              ),
-            SizedBox(height: MediaQuery.of(context).size.height/10),
+            SizedBox(height: MediaQuery.of(context).size.height/15),
             Row(
               children:  [
                 Spacer(),
                 Expanded(
                   flex: 8,
-                  child: LoginForm(LoginController),
+                  child: SignupForm(SignupController),
                 ),
                 Spacer(),
               ],

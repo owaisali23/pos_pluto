@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/AddEmploye/addemp.dart';
 import 'package:flutter_auth/Screens/AddInventory/addinvent.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
+import 'package:flutter_auth/Screens/Employees/employeeslist.dart';
 import 'package:flutter_auth/Screens/Inventory/inventoryscreen.dart';
 import 'package:flutter_auth/Screens/Orders/orders.dart';
+import 'package:flutter_auth/Screens/ReturnedList/returnedlist.dart';
 import 'package:flutter_auth/Screens/Returns/returns.dart';
 import 'package:flutter_auth/Screens/Review/reviewscreen.dart';
 import 'package:flutter_auth/Screens/Saleshistory/saleshistory.dart';
 import 'package:flutter_auth/Screens/Settings/settings.dart';
+import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:get/get.dart';
 
 
@@ -51,7 +54,11 @@ class MyApp extends StatelessWidget {
           )),
 
       home:  
-             WelcomeScreen()
+            WelcomeScreen()
+           
+            //SignupScreen() 
+           // ReturnedProductScreen()
+            // EmployeesList(),
              //LoginScreen(),
              //AddEmp()
              //OrderScreen()

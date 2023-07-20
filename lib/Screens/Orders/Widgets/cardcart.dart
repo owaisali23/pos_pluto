@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Orders/Widgets/button.dart';
+import 'package:get/get.dart';
 
 import '../../../constants.dart';
 //import '../../../size_config.dart';
 
 class CartCard extends StatefulWidget {
+  var name;
+  var type;
+  var price;
+
+  CartCard(this.name, this.type, this.price);
+
   @override
   State<CartCard> createState() => _CartCardState();
 }
 
 class _CartCardState extends State<CartCard> {
  bool isChecked = false;
+ final CounterController _controller = Get.put(CounterController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +64,22 @@ class _CartCardState extends State<CartCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children:  [
               Text(
-                "Nike Zoom Fly 5 Premium",
+                widget.name,
                 //cart.product.title,
                 style: TextStyle(color: Colors.black, fontSize: 14),
                 maxLines: 2,
               ),
-              SizedBox( height: MediaQuery.of(context).size.height/40),
+              SizedBox( height: MediaQuery.of(context).size.height/140),
+              Text(
+                widget.type,
+                //cart.product.title,
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+                maxLines: 2,
+              ),
+              SizedBox( height: MediaQuery.of(context).size.height/50),
               Text.rich(
                 TextSpan(
-                  text: "\$50",
+                  text: widget.price.toString(),
                   //"\$${cart.product.price}",
                   style: TextStyle(
                       fontWeight: FontWeight.w600, color: kPrimaryColor,fontSize: 14),

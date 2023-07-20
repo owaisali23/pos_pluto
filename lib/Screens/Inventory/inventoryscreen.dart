@@ -17,14 +17,15 @@ class Inventory extends StatelessWidget {
 
   AppBar buildAppBar() {
     return AppBar(
-      title: 
+       title: 
        Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: 
+     [
                   Text(
                     "Products Inventory",
                     style: GoogleFonts.lato(textStyle:TextStyle(color: Color.fromARGB(255, 255, 255, 255)),fontWeight:FontWeight.w600,fontSize: 16)

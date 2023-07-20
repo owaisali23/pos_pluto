@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
+import 'package:flutter_auth/Screens/LoginEmployer/login_screen2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 
-class LoginController extends GetxController {
+class SignupController extends GetxController {
   
+  final storenameController = TextEditingController().obs;
+  final descriptionController = TextEditingController().obs;
+  final nameController = TextEditingController().obs;
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
   final String tokenKey = 'auth_token'; // Key to store/retrieve the token in SharedPreferences
@@ -17,13 +20,16 @@ class LoginController extends GetxController {
 
 
 
-void LoginApi() async{
+void SignUpApi() async{
 
   isLoading(true);
-  final response = await post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/auth/signin'),
+  final response = await post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/auth/signup'),
   body: {
+    'storeName': storenameController.value.text,
+    'storeDescription': descriptionController.value.text,
+    'name': nameController.value.text,
     'email': emailController.value.text,
-    'password': passwordController.value.text 
+    'password': passwordController.value.text
   }
   );
 
@@ -44,13 +50,13 @@ void LoginApi() async{
       authToken.value = token;
       isLoading(false);
 
-      print("Login Successfull");
-      Get.to(() => Dashboard());
+      print("User Registered Successfull");
+      Get.to(() => LoginEmployerScreen());
 }
   else {
-    print("Login Failed");
+    print("SignUp Failed");
     isLoading(false);
-    Get.snackbar("Error","Incorrect Email or Password");
+    Get.snackbar("Error","SignUp Failed");
  }
 }
 

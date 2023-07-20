@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Orders/Widgets/cardcart.dart';
+import 'package:flutter_auth/Services/inventorycontroller.dart';
 import 'package:flutter_auth/constants.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //import '../../../size_config.dart';
@@ -13,6 +14,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   bool  check1 = false;
+  final InventoryController icontroller = Get.put(InventoryController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,16 +34,27 @@ class _BodyState extends State<Body> {
              style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 18),
         ),
          ), 
-           ListView.builder(
-            physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
-            shrinkWrap: true,
-            itemCount: 3,//demoCarts.length,
-            itemBuilder: (context, index) => Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: 
-              CartCard(/*cart: demoCarts[index]*/),
-             ),
-            ),
+          Obx(() {
+                if(icontroller.isLoading.value == true){
+                  return Center(child: CircularProgressIndicator());}
+                else{
+                   return Expanded(
+                     child: ListView.builder(
+                               physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
+                               shrinkWrap: true,
+                               itemCount: icontroller.inventory.length,//demoCarts.length,
+                               itemBuilder: (context, index) => Container(
+                                 padding: EdgeInsets.symmetric(vertical: 10),
+                                 child: 
+                                 CartCard( icontroller.inventory[index].product.name,
+                                   icontroller.inventory[index].product.details.type,
+                                    icontroller.inventory[index].price,
+                                   /*cart: demoCarts[index]*/),
+                                ),
+                               ),
+                   );
+          }
+        },),
            /* Padding(
               padding : EdgeInsets.only(top: 10),
               child: Row(

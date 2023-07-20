@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/AddEmploye/addemp.dart';
 import 'package:flutter_auth/Screens/AddInventory/addinvent.dart';
 import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
+import 'package:flutter_auth/Screens/Employees/employeeslist.dart';
 import 'package:flutter_auth/Screens/Inventory/inventoryscreen.dart';
 import 'package:flutter_auth/Screens/Orders/orders.dart';
+import 'package:flutter_auth/Screens/ReturnedList/returnedlist.dart';
 import 'package:flutter_auth/Screens/Returns/returns.dart';
 import 'package:flutter_auth/Screens/Saleshistory/saleshistory.dart';
 import 'package:flutter_auth/Screens/Settings/settings.dart';
@@ -175,6 +177,19 @@ class NavDrawer extends StatelessWidget {
             },
               ),
               ListTile(
+                leading: Icon(Icons.people),
+                title: Text('Employees List'),
+                onTap: () => {Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return EmployeesList();
+                },
+               ),
+              ),
+             },
+              ),
+              ListTile(
                 leading: Icon(Icons.person_add_alt_sharp),
                 title: Text('Add Employee'),
                 onTap: () => {Navigator.push(
@@ -258,6 +273,18 @@ class NavDrawer extends StatelessWidget {
                   
              },
             ),
+            ListTile(
+                leading: Icon(Icons.arrow_back_sharp),
+                title: Text('Returned Products List'),
+                onTap: () => {Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) {
+                  return ReturnedProductScreen();
+                },
+               ),
+              ),},
+              ),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
@@ -270,7 +297,7 @@ class NavDrawer extends StatelessWidget {
                ),
               ),},
               ),
-              SizedBox(height: 250),
+              SizedBox(height: 140),
               ListTile(
                     leading: Icon(Icons.logout),
                     title: Text('Logout'),
