@@ -50,6 +50,7 @@ void SignUpApi() async{
       authToken.value = token;
       isLoading(false);
 
+      print(response);
       print("User Registered Successfull");
       Get.to(() => LoginEmployerScreen());
 }

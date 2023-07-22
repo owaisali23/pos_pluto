@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
+import 'package:flutter_auth/Screens/Orders/orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -45,7 +45,7 @@ void LoginApi() async{
       isLoading(false);
 
       print("Login Successfull");
-      Get.to(() => Dashboard());
+      Get.to(() => OrderScreen());
 }
   else {
     print("Login Failed");

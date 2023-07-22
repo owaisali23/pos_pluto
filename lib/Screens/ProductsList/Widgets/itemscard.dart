@@ -4,20 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/UpdateInventory/updateinventory.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../Models/productcartModel.dart';
 
 class ItemCard extends StatelessWidget {
+
   var name;
   var category;
   String imageUrl;
   String id;
- 
 
+  final CountController = TextEditingController();
+  final WarrantyController = TextEditingController();
+  final PriceController = TextEditingController();
 
-  ItemCard(this.name, this.category, this.imageUrl, this.id );
+  ItemCard(this.name, this.category, this.imageUrl, this.id,);
   @override
   Widget build(BuildContext context) {
-    String image = "http://" + imageUrl;
+    RxBool isLoading = false.obs;
     return Padding(
       padding: const EdgeInsets.only(top: 10,bottom: 10, right: 2,left: 2),
       child: Container(
@@ -52,7 +59,7 @@ class ItemCard extends StatelessWidget {
                   decoration: BoxDecoration(
                   image: DecorationImage(
                   fit: BoxFit.fitWidth,
-                  image: NetworkImage(image),
+                  image: NetworkImage(imageUrl),
                    ),
                    // color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(15),
@@ -91,42 +98,152 @@ class ItemCard extends StatelessWidget {
                     ],),
                   ),
                 ),
-             // SizedBox(width: 20),
-              // Container(
-              //     height: 23,
-              //     width: 23,
-              //     decoration: BoxDecoration(
-              //        color: kPrimaryLightColor,
-              //          borderRadius: BorderRadius.circular(5),
-              //        ),
-              //     child: Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              //       child: Text(
-              //           count.toString(),
-              //           style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.black ),
-              //         ),
-              //     ),
-              //   ),
              ],),
              Divider(),
-               Container(          
-               height: 20,
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.add, color: kPrimaryColor,),
-                    SizedBox(width: 8),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3.0),
-                      child: Text(
-                        'Add To Inventory ',
-                        style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor,),
-                      ),
-                    ),
-                  ],
+             InkWell(  
+                onTap: () { 
+         showDialog(
+                  context: context,
+                  builder: (context) {
+                    return          
+          AlertDialog(
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.all(10),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+          ),
+          title: Text("Enter the Details"),
+          content: 
+                 Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+             Container( 
+              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width/60),
+              alignment: Alignment.topLeft,
+              child: Text( 
+                'Sign Up To POS Pluto',
+                style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w400,fontSize: 14),
+                ),),
+          SizedBox(height: MediaQuery.of(context).size.height/50),
+          TextFormField(
+           // keyboardType: TextInputType.emailAddress,
+           // textInputAction: TextInputAction.next,
+            cursorColor: kPrimaryColor,
+            controller: CountController,
+            decoration: const InputDecoration(
+              hintText: "Count",
+              prefixIcon: Padding(
+                padding: EdgeInsets.all(defaultPadding),
+                child: Icon(Icons.store),
+              ),
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height/50),
+          TextFormField(
+              controller: WarrantyController,
+              cursorColor: kPrimaryColor,
+              decoration: const InputDecoration(
+                hintText: "Warranty",
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.shop),
                 ),
               ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height/50),
+          TextFormField(
+              controller: PriceController,
+              cursorColor: kPrimaryColor,
+              decoration: const InputDecoration(
+                hintText: "Price",
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.person),
+                ),
+              ),
+            ),
+             ],
+         ),
+         actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, [0, 0, 0]),
+              child: Text("CANCEL"),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(kPrimaryColor),
+              ),
+
+              onPressed: () async{
+            //  int Count = int.tryParse(CountController.text) ?? 0;
+            //  int Warranty = int.tryParse(WarrantyController.text) ?? 0;
+            //  int Price = int.tryParse(PriceController.text) ?? 0;    
+            final String tokenKey = 'auth_token';
+            final prefs = await SharedPreferences.getInstance();
+            final token = prefs.getString(tokenKey) ?? '';
+
+      
+  isLoading.value = true;
+  final response = await http.post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
+  headers: {
+            'Authorization': token,
+          },
+body: {
+           "productId": "64b96ee202c5a42f4a1fdc38",
+            "count": 14,
+            "price": 1000,
+            "warranty": 1 
+},   
+  );
+
+   print (response.statusCode);
+   if (response.statusCode == 200) {
+
+      isLoading.value = false;
+      print (response.statusCode);
+      print("Product Added to inventory");
+      Get.snackbar("Product Added To Inventory", 'Success');
+    // Get.to(() => EmployeesList());
+}
+  else {
+   // print("Product Adding Failed");
+    print (response.statusCode);
+    print(response);
+    isLoading.value = false;
+    Get.snackbar("Error","Please try again");
+ }
+},
+              child: Text(
+                "DONE",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+                );
+                 },
+                );
+              },
+                 child: Container(          
+                 height: 20,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add, color: kPrimaryColor,),
+                      SizedBox(width: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Text(
+                          'Add To Inventory ',
+                          style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor,),
+                        ),
+                      ),
+                    ],
+                  ),
+                             ),
+               ),
 
           ],
         

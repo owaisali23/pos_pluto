@@ -43,46 +43,43 @@ class SignupForm extends StatelessWidget {
               hintText: "Store Name",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
+                child: Icon(Icons.store),
               ),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height/50),
           TextFormField(
               controller: controller.descriptionController.value,
-              obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: const InputDecoration(
                 hintText: "Store Description",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(Icons.shop),
                 ),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height/50),
           TextFormField(
               controller: controller.nameController.value,
-              obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: const InputDecoration(
                 hintText: "Name",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(Icons.person),
                 ),
               ),
             ),
               SizedBox(height: MediaQuery.of(context).size.height/50),
           TextFormField(
               controller: controller.emailController.value,
-              obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: const InputDecoration(
                 hintText: "Email",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(Icons.email),
                 ),
               ),
             ),

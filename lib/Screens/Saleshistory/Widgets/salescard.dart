@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_auth/Services/imagecontroller.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,8 +15,10 @@ class SalesCard extends StatelessWidget {
   String customerPhone;
   int count;
   String id;
+  String imageUrl;
 
-  SalesCard(this.name, this.price, this.customerName, this.customerPhone, this.count, this.id);
+  SalesCard(this.name, this.price, this.customerName, this.customerPhone, this.count, this.id, this.imageUrl);
+  final ImageController controller = Get.put(ImageController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +35,36 @@ class SalesCard extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: Image.asset(
-                      'assets/images/Shoes.jpg',
-                      height: 60.0,
-                      width: 60.0,
-                    ),
-                  ),
+                   Container(
+                                  width: 60,
+                                  height: 60,
+                                child: FutureBuilder<String>(
+                              future: controller.imageApi(imageUrl),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(), // Show circular progress indicator while waiting for data
+                                  );
+                                } else if (snapshot.hasError) {
+                                  // Handle error if needed
+                                  return Text('Error fetching image URL');
+                                } else {
+                                  String completeUrl = snapshot.data;
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.fitWidth,
+                                        image: NetworkImage(completeUrl),
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                                ),
+                    SizedBox(width: 16),
+                     
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

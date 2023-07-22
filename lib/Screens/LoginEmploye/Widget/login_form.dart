@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
+import 'package:flutter_auth/Screens/Orders/orders.dart';
 import 'package:flutter_auth/Services/logincontroller.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -77,7 +77,7 @@ class LoginForm extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return Dashboard();
+                  return OrderScreen();
                 },
               ),
              );

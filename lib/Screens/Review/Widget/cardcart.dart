@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Review/Widget/button.dart';
 import 'package:flutter_auth/Services/cartcontroller.dart';
+import 'package:flutter_auth/Services/imagecontroller.dart';
 import 'package:get/get.dart';
 
 import '../../../Models/productcartModel.dart';
 import '../../../constants.dart';
 //import '../../../size_config.dart';
 
-class CartCard extends StatelessWidget {
+class CartCard extends StatefulWidget {
   String name;
   String type;
   int price;
@@ -17,9 +18,31 @@ class CartCard extends StatelessWidget {
   int warranty;
   String imageUrl;
 
-  final CartController _cartController = Get.put(CartController());
 
   CartCard(this.name, this.type, this.price, this.count,this.id, this.productId ,this.warranty, this.imageUrl /*this.custname, this.phone*/);
+
+  @override
+  State<CartCard> createState() => _CartCardState();
+}
+
+class _CartCardState extends State<CartCard> {
+  String completeUrl;
+   void initState() {
+    super.initState();
+    // Fetch the image URL using ImageController only once in initState
+    controller.imageApi(widget.imageUrl).then((url) {
+      setState(() {
+        completeUrl = url;
+      });
+    }).catchError((error) {
+      // Handle error if needed
+      print('Error fetching image URL: $error');
+    });
+  }
+  final CartController _cartController = Get.put(CartController());
+
+  final ImageController controller = Get.put(ImageController());
+
   @override
 
   Widget build(BuildContext context) {
@@ -45,24 +68,44 @@ class CartCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
         Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,  
         children: [
-          
-          SizedBox(
-            width: 88,
-            child: AspectRatio(
-              aspectRatio: 0.88,
-              child: Container(
-                padding: EdgeInsets.all(/*getProportionateScreenWidth*/(10)),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(imageUrl),
-                  ),
-                  color: Color(0xFFF5F6F9),
-                  borderRadius: BorderRadius.circular(15),
+         SizedBox(
+           width: MediaQuery.of(context).size.width/5,
+           child: AspectRatio(
+                        aspectRatio: 0.88,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                               // color: Colors.grey, // Placeholder color for the image
+                              ),
+                            ),
+                             FutureBuilder<String>(
+                              future: controller.imageApi(widget.imageUrl),
+                          builder: (context, snapshot) {
+          if (completeUrl == null) {
+            // Show a placeholder or loading widget until the image URL is fetched
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(completeUrl),
                 ),
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
+            );
+          }
+        },
+      ),
+                          ],
+                        ),
+                      ),
           ),
           SizedBox(width: 20),
           Flexible(
@@ -70,14 +113,14 @@ class CartCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  [
                 Text(
-                  name,
+                  widget.name ?? ' ',
                   overflow: TextOverflow.ellipsis,
                   //cart.product.title,
                   style: TextStyle(color: Colors.black, fontSize: 15),
                   maxLines: 2,
                 ),
                 Text(
-                  type,
+                  widget.type ?? ' ',
                   //cart.product.title,
                   style: TextStyle(color: Colors.grey, fontSize: 13),
                   maxLines: 2,
@@ -85,7 +128,7 @@ class CartCard extends StatelessWidget {
                 SizedBox(height: 10),
                 Text.rich(
                   TextSpan(
-                    text: "\$" + price.toString(),
+                    text: "\$" + widget.price.toString(),
                     //"\$${cart.product.price}",
                     style: TextStyle(
                         fontWeight: FontWeight.w600, color: kPrimaryColor,fontSize: 14),
@@ -99,7 +142,7 @@ class CartCard extends StatelessWidget {
               GestureDetector(
 
                 onTap: () { 
-                    final product = Product(name, type, price, count, id, productId, warranty, imageUrl);
+                    final product = Product(widget.name, widget.type, widget.price, widget.count, widget.id, widget.productId, widget.warranty, widget.imageUrl);
 
                   _cartController.removeFromCart(product);
                 },
@@ -121,7 +164,7 @@ class CartCard extends StatelessWidget {
                                 ),
                 ),
               ),
-              Text(count.toString()),
+              Text(widget.count.toString()),
             ],
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Models/returnedlistModel.dart';
+import 'package:flutter_auth/Services/imagecontroller.dart';
 import 'package:flutter_auth/Services/returnedcontroller.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class _ReturnedProductScreenState extends State<ReturnedProductScreen> {
   final ReturnedProductController rcontroller = Get.put(ReturnedProductController());
   final RefreshController _refreshController = RefreshController();
   TextEditingController _searchController = TextEditingController();
+  final ImageController controller = Get.put(ImageController());
   bool _isSearching = false;
 
   @override
@@ -124,13 +126,30 @@ class _ReturnedProductScreenState extends State<ReturnedProductScreen> {
                                 leading: Container(
                                   width: 60,
                                   height: 60,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    image: DecorationImage(
-                                      image: NetworkImage( rcontroller.filteredProducts[index].productDetails.imageUrl), // Replace with actual product image
-                                      fit: BoxFit.cover,
+                                child: FutureBuilder<String>(
+                              future: controller.imageApi(rcontroller.filteredProducts[index].productDetails.imageUrl),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(), // Show circular progress indicator while waiting for data
+                                  );
+                                } else if (snapshot.hasError) {
+                                  // Handle error if needed
+                                  return Text('Error fetching image URL');
+                                } else {
+                                  String completeUrl = snapshot.data;
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.fitWidth,
+                                        image: NetworkImage(completeUrl),
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
-                                  ),
+                                  );
+                                }
+                              },
+                            ),
                                 ),
                                 title: Text(
                                  product.productDetails.name,

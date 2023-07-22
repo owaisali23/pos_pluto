@@ -121,6 +121,7 @@ class SalesHistoryState extends State<SalesHistory> {
                           filteredProduct[index].customerPhone,
                           filteredProduct[index].count,
                           filteredProduct[index].id,
+                          filteredProduct[index].product.imageUrl
                         );
                       },
                     ),

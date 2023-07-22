@@ -102,7 +102,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 ),
                 Obx(() {
                   if (icontroller.isLoading.value == true) {
-                    return Center(child: CircularProgressIndicator());
+                    return Expanded(child: Center(child: CircularProgressIndicator()));
                   } else {
                     final filteredProduct = icontroller.inventory.where(
                       (inventory) => inventory.product.name

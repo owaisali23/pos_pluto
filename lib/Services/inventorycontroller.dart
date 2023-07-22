@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -25,7 +26,13 @@ static Future <List<ProductItem>> getinventory() async {
   final response = await http.get(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
     headers: {
             'Authorization': token,
-          });
+          }).timeout(
+        // Set the desired timeout duration in milliseconds (adjust as needed).
+        Duration(seconds: 120),
+        onTimeout: () {
+          throw TimeoutException('Timeout occurred');
+        },
+      );;
   
    print(response.statusCode);
   // print(prod);

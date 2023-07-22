@@ -3,6 +3,7 @@ import 'package:flutter_auth/Models/productcartModel.dart';
 import 'package:flutter_auth/Screens/Orders/Widgets/button.dart';
 import 'package:flutter_auth/Services/CustomerInfocontroler.dart';
 import 'package:flutter_auth/Services/cartcontroller.dart';
+import 'package:flutter_auth/Services/imagecontroller.dart';
 import 'package:get/get.dart';
 
 import '../../../constants.dart';
@@ -17,6 +18,7 @@ class CartCard extends StatefulWidget {
   int warranty;
   String imageUrl;
 
+
   CartCard(this.name, this.type, this.price,  this.id, this.productId, this.warranty, this.imageUrl);
 
   @override
@@ -26,10 +28,24 @@ class CartCard extends StatefulWidget {
 class _CartCardState extends State<CartCard> {
  bool isChecked = false;
  final CartController _cartController = Get.put(CartController());
+ final ImageController controller = Get.put(ImageController());
  // CustomerInfoController Ccontroller = Get.put(CustomerInfoController());
  int count = 1;
+ String completeUrl;
 
   @override
+   void initState() {
+    super.initState();
+    // Fetch the image URL using ImageController only once in initState
+    controller.imageApi(widget.imageUrl).then((url) {
+      setState(() {
+        completeUrl = url;
+      });
+    }).catchError((error) {
+      // Handle error if needed
+      print('Error fetching image URL: $error');
+    });
+  }
   Widget build(BuildContext context) {
 
  void onCheckboxChanged(bool value) {
@@ -62,7 +78,6 @@ class _CartCardState extends State<CartCard> {
         }
       }
     }
-
   return  Container(
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.width/28,
@@ -85,21 +100,40 @@ class _CartCardState extends State<CartCard> {
         children: [
           SizedBox(
            width: MediaQuery.of(context).size.width/5,
-           
-            child: AspectRatio(
-              aspectRatio: 0.88,
-              child: Container(
-                
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(widget.imageUrl),
-                  ),
-                  color: Color(0xFFF5F6F9),
-                  borderRadius: BorderRadius.circular(15),
+           child: AspectRatio(
+                        aspectRatio: 0.88,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                               // color: Colors.grey, // Placeholder color for the image
+                              ),
+                            ),
+                             FutureBuilder<String>(
+                              future: controller.imageApi(widget.imageUrl),
+                          builder: (context, snapshot) {
+          if (completeUrl == null) {
+            // Show a placeholder or loading widget until the image URL is fetched
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(completeUrl),
                 ),
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
+            );
+          }
+        },
+      ),
+                          ],
+                        ),
+                      ),
           ),
           SizedBox(width:  MediaQuery.of(context).size.width/20),
           Flexible(
@@ -113,6 +147,7 @@ class _CartCardState extends State<CartCard> {
                 ),
           
                 SizedBox( height: MediaQuery.of(context).size.height/140),
+                if(widget.type != null)
                 Text(
                   widget.type,
                   //cart.product.title,
