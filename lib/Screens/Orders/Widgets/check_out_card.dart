@@ -11,11 +11,9 @@ import '../../../constants.dart';
 //import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
-
   CustomerInfoController Ccontroller = Get.put(CustomerInfoController());
-  
 
-     void navigateToReviewScreen(BuildContext context) {
+  void navigateToReviewScreen(BuildContext context) {
     String custName = Ccontroller.CustnameController.text;
     String custPhone = Ccontroller.CustphoneController.text;
 
@@ -44,6 +42,7 @@ class CheckoutCard extends StatelessWidget {
       );
     }
   }
+
   String validateName(String value) {
     if (value.isEmpty) {
       return 'Please enter customer name';
@@ -62,160 +61,152 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical:/*getProportionateScreenWidth*/(15),
-        horizontal: /*getProportionateScreenWidth*/(30),
-      ),
-      // height: 174,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom + 20,
         ),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, -15),
-            blurRadius: 20,
-            color: Color(0xFFDADADA).withOpacity(0.15),
-          )
-        ],
-      ),
-      child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           children: [
-           /* Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: /*getProportionateScreenWidth*/(40),
-                  width: /*getProportionateScreenWidth*/(40),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: SvgPicture.asset("assets/icons/receipt.svg"),
-                ),
-                Spacer(),
-                Text("Add voucher code"),
-                const SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kPrimaryColor,
-                )
-              ],
-            ),*/
-            SizedBox(height: /*getProportionateScreenHeight*/(20)),
-            Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text( 
-                          'Customer Name',
-                           style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 14),
-                        ),
-                    SizedBox(
-                  width: 200, // Adjust the width as needed
-                  child: TextFormField(
-        controller: Ccontroller.CustnameController,
-        style: GoogleFonts.lato(
-          textStyle: TextStyle(color: kPrimaryColor),
-          fontWeight: FontWeight.w500,
-          fontSize: 14,
-        ),
-        decoration: InputDecoration(
-          hintText: 'Enter customer name',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 12,
-            horizontal: 16,
-          ),
-          filled: true,
-          fillColor: Colors.grey[200],
-        ),
-        validator: validateName, // Use the validateName function for validation
-      ),
-                ),
-                  ],
-                ),
-                SizedBox(height: /*getProportionateScreenHeight*/(8)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text( 
-                          'Customer Number',
-                           style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 14),
-                        ),
-                      SizedBox(
-                  width: 200, // Adjust the width as needed
-                  child: TextFormField(
-                    controller: Ccontroller.CustphoneController,
-                   style: GoogleFonts.lato(
-                   textStyle: TextStyle(color: kPrimaryColor),
-                   fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                   ),
-                   decoration: InputDecoration(
-                   hintText: 'Enter customer number',
-                   border: OutlineInputBorder(
-                   borderRadius: BorderRadius.circular(10),
-                   borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
-                   ),
-                  contentPadding: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 16,
-                  ),
-                filled: true,
-               fillColor: Colors.grey[200],
-               ),
-             keyboardType: TextInputType.phone, // Set keyboard type to phone number
-            validator: validatePhoneNumber, // Use the validatePhoneNumber function for validation
-            ),
-                ),
-                  ],
-                ),  
-            SizedBox(height: /*getProportionateScreenHeight*/(30)),      
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // Text.rich(
-                //   TextSpan(
-                //     text: "Total:\n",
-                //     children: [
-                //       TextSpan(
-                //         text: "\$150.0",
-                //         style: TextStyle(fontSize: 16,fontWeight:FontWeight.w700, color: Colors.black),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-              SizedBox(
-                  width: /*getProportionateScreenWidth*/(190),
-                  child: TextButton(
-                   style: TextButton.styleFrom(
-                   shape:
-                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                   primary: Colors.white,
-                   backgroundColor: kPrimaryColor,
-                   ),
-              onPressed: () => navigateToReviewScreen(context),
-              child: Text(
-               "Review",
-               style: TextStyle(
-               fontSize: /*getProportionateScreenWidth*/(18),
-              color: Colors.white,
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 30,
               ),
-             ),
-           ),
-         ),
-         ],),
-        ],
-       ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, -15),
+                    blurRadius: 20,
+                    color: Color(0xFFDADADA).withOpacity(0.15),
+                  )
+                ],
+              ),
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Customer Name',
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(color: Colors.black),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: TextFormField(
+                            controller: Ccontroller.CustnameController,
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(color: kPrimaryColor),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Enter customer name',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 16,
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                            ),
+                            validator: validateName,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Customer Number',
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(color: Colors.black),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: TextFormField(
+                            controller: Ccontroller.CustphoneController,
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(color: kPrimaryColor),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Enter customer number',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                  color: kPrimaryColor,
+                                  width: 0.0,
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 16,
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                            ),
+                            keyboardType: TextInputType.phone,
+                            validator: validatePhoneNumber,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: 190,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              primary: Colors.white,
+                              backgroundColor: kPrimaryColor,
+                            ),
+                            onPressed: () => navigateToReviewScreen(context),
+                            child: Text(
+                              "Review",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

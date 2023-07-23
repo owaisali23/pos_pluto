@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/AddEmploye/addemp.dart';
 import 'package:flutter_auth/Screens/AddProduct/addinvent.dart';
+import 'package:flutter_auth/Screens/Dashboard/dashboard.dart';
 import 'package:flutter_auth/Screens/Employees/employeeslist.dart';
 import 'package:flutter_auth/Screens/Inventory/inventoryscreen.dart';
 import 'package:flutter_auth/Screens/Orders/orders.dart';
@@ -39,18 +40,18 @@ class NavDrawer extends StatelessWidget {
                         fit: BoxFit.fill,
                         image: AssetImage('assets/images/cover.jpg'))*/),
               ),*/
-            //   ListTile(
-            //     leading: Icon(Icons.home),
-            //     title: Text('Dashboard'),
-            //     onTap: () => {  Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) {
-            //       return Dashboard();
-            //     },
-            //   ),
-            //  ),},
-            //   ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Dashboard'),
+                onTap: () => {  Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return SalesSummaryScreen();
+                },
+              ),
+             ),},
+              ),
                     ListTile(
                 leading: Icon(Icons.shop_2),
                 title: Text('Order'),
