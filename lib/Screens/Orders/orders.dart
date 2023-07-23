@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Models/productcartModel.dart';
 import 'package:flutter_auth/Screens/Orders/Widgets/body.dart';
 import 'package:flutter_auth/Screens/Orders/Widgets/cardcart.dart';
 import 'package:flutter_auth/Screens/Orders/Widgets/check_out_card.dart';
@@ -20,7 +21,10 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
    TextEditingController _searchController = TextEditingController();
+   final List<Product> selectedProducts;
+   _OrderScreenState ({ this.selectedProducts});
 
+   
   bool _isSearching = false;
   String _searchText = "";
    bool  check1 = false;
@@ -41,6 +45,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xFFF4F4F4),
       drawer: NavDrawer(),
       appBar: AppBar(
@@ -59,6 +64,11 @@ class _OrderScreenState extends State<OrderScreen> {
                     "Products",
                     style: GoogleFonts.lato(textStyle:TextStyle(color: Color.fromARGB(255, 255, 255, 255)),fontWeight:FontWeight.w600,fontSize: 18)
                   ),
+                  // if(selectedProducts.length != null)
+                  // Text(
+                  //   selectedProducts.length.toString() ?? "" + "Items" ,
+                  //   style: GoogleFonts.lato(textStyle:TextStyle(color: Color.fromARGB(255, 255, 255, 255)),fontWeight:FontWeight.w600,fontSize: 18)
+                  // ),
                 ],
               )
             ],
@@ -146,7 +156,9 @@ class _OrderScreenState extends State<OrderScreen> {
         ],
       ),
       ),
-      bottomNavigationBar: CheckoutCard()
+      bottomNavigationBar:
+          CheckoutCard()  
+          
       );
 
   }

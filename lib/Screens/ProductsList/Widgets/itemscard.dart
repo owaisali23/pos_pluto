@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/UpdateInventory/updateinventory.dart';
+import 'package:flutter_auth/Services/createInventory.dart';
+import 'package:flutter_auth/Services/imagecontroller.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +21,9 @@ class ItemCard extends StatelessWidget {
   final CountController = TextEditingController();
   final WarrantyController = TextEditingController();
   final PriceController = TextEditingController();
+   final CreateInventoryController controller = Get.put(CreateInventoryController());
+   final ImageController Icontroller = Get.put(ImageController());
+   String completeUrl;
 
   ItemCard(this.name, this.category, this.imageUrl, this.id,);
   @override
@@ -51,21 +55,40 @@ class ItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [ 
                 AspectRatio(
-                aspectRatio: 0.75,
-                child: Container(
-                  //  width: 150,
-                  //  height: 100,
-                  //  padding: EdgeInsets.all(/*getProportionateScreenWidth*/(10)),
-                  decoration: BoxDecoration(
-                  image: DecorationImage(
-                  fit: BoxFit.fitWidth,
-                  image: NetworkImage(imageUrl),
-                   ),
-                   // color: Color(0xFFF5F6F9),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
+                        aspectRatio: 0.88,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                               // color: Colors.grey, // Placeholder color for the image
+                              ),
+                            ),
+                             FutureBuilder<String>(
+                              future: Icontroller.imageApi(imageUrl),
+                          builder: (context, snapshot) {
+                            String completeUrl = snapshot.data;
+                           if (completeUrl == null) {
+                          // Show a placeholder or loading widget until the image URL is fetched
+                            return Center(
+                             child: CircularProgressIndicator(),
+                            );
+                         } else {
+                          return Container(
+                            decoration: BoxDecoration(
+                            image: DecorationImage(
+                            fit: BoxFit.fitWidth,
+                           image: NetworkImage(completeUrl),
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                         ),
+                        );
+                       }
+                       },
+                     ),
+                          ],
+                        ),
+                      ),
            ],),
           ), ),
          ),
@@ -175,46 +198,47 @@ class ItemCard extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(kPrimaryColor),
               ),
+              onPressed: () => controller.AddinventApi(),
 
-              onPressed: () async{
-            //  int Count = int.tryParse(CountController.text) ?? 0;
-            //  int Warranty = int.tryParse(WarrantyController.text) ?? 0;
-            //  int Price = int.tryParse(PriceController.text) ?? 0;    
-            final String tokenKey = 'auth_token';
-            final prefs = await SharedPreferences.getInstance();
-            final token = prefs.getString(tokenKey) ?? '';
+//               onPressed: () async{
+//             //  int Count = int.tryParse(CountController.text) ?? 0;
+//             //  int Warranty = int.tryParse(WarrantyController.text) ?? 0;
+//             //  int Price = int.tryParse(PriceController.text) ?? 0;    
+//             final String tokenKey = 'auth_token';
+//             final prefs = await SharedPreferences.getInstance();
+//             final token = prefs.getString(tokenKey) ?? '';
 
       
-  isLoading.value = true;
-  final response = await http.post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
-  headers: {
-            'Authorization': token,
-          },
-body: {
-           "productId": "64b96ee202c5a42f4a1fdc38",
-            "count": 14,
-            "price": 1000,
-            "warranty": 1 
-},   
-  );
+//   isLoading.value = true;
+//   final response = await http.post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
+//   headers: {
+//             'Authorization': token,
+//           },
+// body: {
+//            "productId": "64b96ee202c5a42f4a1fdc38",
+//             "count": 14,
+//             "price": 1000,
+//             "warranty": 1 
+// },   
+//   );
 
-   print (response.statusCode);
-   if (response.statusCode == 200) {
+//    print (response.statusCode);
+//    if (response.statusCode == 200) {
 
-      isLoading.value = false;
-      print (response.statusCode);
-      print("Product Added to inventory");
-      Get.snackbar("Product Added To Inventory", 'Success');
-    // Get.to(() => EmployeesList());
-}
-  else {
-   // print("Product Adding Failed");
-    print (response.statusCode);
-    print(response);
-    isLoading.value = false;
-    Get.snackbar("Error","Please try again");
- }
-},
+//       isLoading.value = false;
+//       print (response.statusCode);
+//       print("Product Added to inventory");
+//       Get.snackbar("Product Added To Inventory", 'Success');
+//     // Get.to(() => EmployeesList());
+// }
+//   else {
+//    // print("Product Adding Failed");
+//     print (response.statusCode);
+//     print(response);
+//     isLoading.value = false;
+//     Get.snackbar("Error","Please try again");
+//  }
+// },
               child: Text(
                 "DONE",
                 style: TextStyle(color: Colors.white),

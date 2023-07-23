@@ -157,7 +157,7 @@ class _CartCardState extends State<CartCard> {
                 SizedBox( height: MediaQuery.of(context).size.height/50),
                 Text.rich(
                   TextSpan(
-                    text: "\$" + widget.price.toString(),
+                    text: "\Rs" + widget.price.toString(),
                     //"\$${cart.product.price}",
                     style: TextStyle(
                         fontWeight: FontWeight.w600, color: kPrimaryColor,fontSize: 14),

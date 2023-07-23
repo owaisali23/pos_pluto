@@ -78,7 +78,7 @@ class NavDrawer extends StatelessWidget {
              }
             ),
              ListTile(
-                leading: Icon(Icons.inventory),
+                leading: Icon(Icons.shop_2),
                 title: Text('Products List / Add Products to Inventory'),
                 onTap: () => {  Navigator.push(
                context,
@@ -308,7 +308,7 @@ class NavDrawer extends StatelessWidget {
                ),
               ),},
               ),
-              SizedBox(height: 140),
+              SizedBox(height: 200),
               ListTile(
                     leading: Icon(Icons.logout),
                     title: Text('Logout'),

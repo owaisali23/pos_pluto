@@ -12,7 +12,7 @@ class CartCard extends StatefulWidget {
   String name;
   String type;
   int price;
-  int count = 1;
+  int count;
   String id;
   String productId;
   int warranty;

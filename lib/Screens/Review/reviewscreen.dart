@@ -33,10 +33,11 @@ class ReviewScreen extends StatelessWidget {
                   "Review Cart",
                   style: GoogleFonts.lato(textStyle:TextStyle(color: Colors.black),fontWeight:FontWeight.w600,fontSize: 20)
                 ),
-                Text(
-                  "3 items",
-                  style: GoogleFonts.lato(textStyle:TextStyle(color: Color.fromARGB(221, 76, 78, 78)),fontWeight:FontWeight.w600,fontSize: 14),
-                ),
+               if (selectedProducts != null && selectedProducts.isNotEmpty)
+                  Text(
+                    selectedProducts.length.toString() + " items",
+                    style: GoogleFonts.lato(textStyle:TextStyle(color: Color.fromARGB(221, 76, 78, 78)),fontWeight:FontWeight.w600,fontSize: 14),
+                  ),
               ],
             )
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Models/productcartModel.dart';
 import 'package:flutter_auth/Screens/Review/reviewscreen.dart';
 import 'package:flutter_auth/Services/CustomerInfocontroler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,10 +11,9 @@ import '../../../constants.dart';
 //import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
-   CheckoutCard({
-    Key  key,
-  }) : super(key: key);
+
   CustomerInfoController Ccontroller = Get.put(CustomerInfoController());
+  
 
      void navigateToReviewScreen(BuildContext context) {
     String custName = Ccontroller.CustnameController.text;
@@ -43,6 +43,21 @@ class CheckoutCard extends StatelessWidget {
         MaterialPageRoute(builder: (context) => ReviewScreen()),
       );
     }
+  }
+  String validateName(String value) {
+    if (value.isEmpty) {
+      return 'Please enter customer name';
+    }
+    // Add additional validation if needed (e.g., check for special characters, length, etc.)
+    return null; // Return null if the input is valid
+  }
+
+  String validatePhoneNumber(String value) {
+    if (value.isEmpty) {
+      return 'Please enter customer phone number';
+    }
+    // Add additional validation if needed (e.g., check for non-numeric characters, length, etc.)
+    return null; // Return null if the input is valid
   }
 
   @override
@@ -105,26 +120,26 @@ class CheckoutCard extends StatelessWidget {
                     SizedBox(
                   width: 200, // Adjust the width as needed
                   child: TextFormField(
-                    controller: Ccontroller.CustnameController,
-                    style: GoogleFonts.lato(
-                      textStyle: TextStyle(color: kPrimaryColor),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Enter customer name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 16,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                    ),
-                    // You can add controller and other properties if needed
-                  ),
+        controller: Ccontroller.CustnameController,
+        style: GoogleFonts.lato(
+          textStyle: TextStyle(color: kPrimaryColor),
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+        ),
+        decoration: InputDecoration(
+          hintText: 'Enter customer name',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 16,
+          ),
+          filled: true,
+          fillColor: Colors.grey[200],
+        ),
+        validator: validateName, // Use the validateName function for validation
+      ),
                 ),
                   ],
                 ),
@@ -140,45 +155,45 @@ class CheckoutCard extends StatelessWidget {
                   width: 200, // Adjust the width as needed
                   child: TextFormField(
                     controller: Ccontroller.CustphoneController,
-                    style: GoogleFonts.lato(
-                      textStyle: TextStyle(color: kPrimaryColor),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Enter customer number',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
-                        
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 16,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                    ),
-                    // You can add controller and other properties if needed
+                   style: GoogleFonts.lato(
+                   textStyle: TextStyle(color: kPrimaryColor),
+                   fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                   ),
+                   decoration: InputDecoration(
+                   hintText: 'Enter customer number',
+                   border: OutlineInputBorder(
+                   borderRadius: BorderRadius.circular(10),
+                   borderSide: const BorderSide(color: kPrimaryColor, width: 0.0),
+                   ),
+                  contentPadding: EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
                   ),
+                filled: true,
+               fillColor: Colors.grey[200],
+               ),
+             keyboardType: TextInputType.phone, // Set keyboard type to phone number
+            validator: validatePhoneNumber, // Use the validatePhoneNumber function for validation
+            ),
                 ),
                   ],
                 ),  
             SizedBox(height: /*getProportionateScreenHeight*/(30)),      
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text.rich(
-                  TextSpan(
-                    text: "Total:\n",
-                    children: [
-                      TextSpan(
-                        text: "\$150.0",
-                        style: TextStyle(fontSize: 16,fontWeight:FontWeight.w700, color: Colors.black),
-                      ),
-                    ],
-                  ),
-                ),
+                // Text.rich(
+                //   TextSpan(
+                //     text: "Total:\n",
+                //     children: [
+                //       TextSpan(
+                //         text: "\$150.0",
+                //         style: TextStyle(fontSize: 16,fontWeight:FontWeight.w700, color: Colors.black),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               SizedBox(
                   width: /*getProportionateScreenWidth*/(190),
                   child: TextButton(

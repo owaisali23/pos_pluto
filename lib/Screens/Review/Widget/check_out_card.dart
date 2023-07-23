@@ -82,6 +82,7 @@ class CheckoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   int totalAmount = selectedProducts?.fold(0, (sum, product) => sum + (product.price * product.count)) ?? 0;
     return Container(
       padding: EdgeInsets.symmetric(
         vertical:/*getProportionateScreenWidth*/(15),
@@ -144,9 +145,8 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$150.0",
-                        style: TextStyle(fontSize: 16, fontWeight:FontWeight.w700, color: Colors.black),
-                      ),
+                       text: "\Rs$totalAmount", // Display the calculated total amount
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.black),)
                     ],
                   ),
                 ),

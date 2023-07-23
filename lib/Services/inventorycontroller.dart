@@ -28,7 +28,7 @@ static Future <List<ProductItem>> getinventory() async {
             'Authorization': token,
           }).timeout(
         // Set the desired timeout duration in milliseconds (adjust as needed).
-        Duration(seconds: 120),
+        Duration(seconds: 500),
         onTimeout: () {
           throw TimeoutException('Timeout occurred');
         },
