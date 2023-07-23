@@ -39,10 +39,10 @@ class Body extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: 
               Obx(() {
-                    if(pcontroller.isLoading.value == true){
-                    return Center(child: CircularProgressIndicator());}
-                    else{
-                   return SmartRefresher(
+                    if (pcontroller.isLoading.value) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return SmartRefresher(
                           enablePullDown: true,
                           controller: _refreshController, // Use the separate RefreshController
                           onRefresh: () async {

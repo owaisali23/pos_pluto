@@ -36,6 +36,10 @@ dependencies:
   syncfusion_flutter_charts: ^20.4.48
   settings_ui: ^2.0.2
   flutter_slidable: ^3.0.0
+  pdf: ^3.8.4
+  open_file: ^3.3.2
+  downloads_path_provider: ^0.1.0
+  flutter_downloader: ^1.10.5
   
 
 dev_dependencies:

@@ -198,47 +198,48 @@ class ItemCard extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(kPrimaryColor),
               ),
-              onPressed: () => controller.AddinventApi(),
+            //  onPressed: ()// => controller.AddinventApi(),
 
-//               onPressed: () async{
-//             //  int Count = int.tryParse(CountController.text) ?? 0;
-//             //  int Warranty = int.tryParse(WarrantyController.text) ?? 0;
-//             //  int Price = int.tryParse(PriceController.text) ?? 0;    
-//             final String tokenKey = 'auth_token';
-//             final prefs = await SharedPreferences.getInstance();
-//             final token = prefs.getString(tokenKey) ?? '';
+              onPressed: () async{
+            //  int Count = int.tryParse(CountController.text) ?? 0;
+            //  int Warranty = int.tryParse(WarrantyController.text) ?? 0;
+            //  int Price = int.tryParse(PriceController.text) ?? 0;    
+            final String tokenKey = 'auth_token';
+            final prefs = await SharedPreferences.getInstance();
+            final token = prefs.getString(tokenKey) ?? '';
 
       
-//   isLoading.value = true;
-//   final response = await http.post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
-//   headers: {
-//             'Authorization': token,
-//           },
-// body: {
-//            "productId": "64b96ee202c5a42f4a1fdc38",
-//             "count": 14,
-//             "price": 1000,
-//             "warranty": 1 
-// },   
-//   );
+  isLoading.value = true;
+  final response = await http.post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
+  headers: {
+            'Authorization': token,
+          },
+body: {
+           "productId": "64b96ee202c5a42f4a1fdc38",
+            "count": 14,
+            "price": 1000,
+            "warranty": 1 
+},   
+  );
 
-//    print (response.statusCode);
-//    if (response.statusCode == 200) {
+   print (response.statusCode);
+   if (response.statusCode == 200) {
 
-//       isLoading.value = false;
-//       print (response.statusCode);
-//       print("Product Added to inventory");
-//       Get.snackbar("Product Added To Inventory", 'Success');
-//     // Get.to(() => EmployeesList());
-// }
-//   else {
-//    // print("Product Adding Failed");
-//     print (response.statusCode);
-//     print(response);
-//     isLoading.value = false;
-//     Get.snackbar("Error","Please try again");
-//  }
-// },
+      isLoading.value = false;
+      print (response.statusCode);
+      print("Product Added to inventory");
+      Get.snackbar("Product Added To Inventory", 'Success');
+    // Get.to(() => EmployeesList());
+}
+  else {
+   // print("Product Adding Failed");
+    //print ();
+    print (response.statusCode);
+   // print(response);
+    isLoading.value = false;
+    Get.snackbar("Error","Please try again");
+ }
+},
               child: Text(
                 "DONE",
                 style: TextStyle(color: Colors.white),

@@ -308,7 +308,7 @@ class NavDrawer extends StatelessWidget {
                ),
               ),},
               ),
-              SizedBox(height: 200),
+              SizedBox(height: 250),
               ListTile(
                     leading: Icon(Icons.logout),
                     title: Text('Logout'),
