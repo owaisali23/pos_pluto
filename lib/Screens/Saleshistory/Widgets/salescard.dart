@@ -194,53 +194,114 @@ class SalesCard extends StatelessWidget {
   }
 }
 
-  Future<int> _showReturnDialog(BuildContext context) async {
-    final TextEditingController countController = TextEditingController();
 
-    int selectedCount = await showDialog<int>(
-      context: context,
-      builder: (context) {
-        return Center(
+Future<int> _showReturnDialog(BuildContext context) async {
+  final TextEditingController countController = TextEditingController();
+
+  int selectedCount = await showDialog<int>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        insetPadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+        title: Text("Enter the Count that you want to return"),
+        content: SingleChildScrollView(
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.8, // 80% of the screen width
-          height: MediaQuery.of(context).size.height * 0.4,
-            child: AlertDialog(
-              insetPadding: EdgeInsets.zero,
-                       contentPadding: EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                         borderRadius:
-                         BorderRadius.all(
-                         Radius.circular(10.0))),
-              title: Text("Enter the Count that you want to return"),
-              content: TextField(
-                controller: countController,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 0),
-                  child: Text("CANCEL"),
-                ),
-                TextButton(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(kPrimaryColor)),
-                  onPressed: () {
-                    // Parse the input value from the TextField as an integer
-                    int enteredCount = int.tryParse(countController.text) ?? 0;
-                  
-                    // Close the dialog and return the entered count value
-                    Navigator.pop(context, enteredCount);
-                  },
-                  child: Text("DONE", style: TextStyle(color: Colors.white),),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: countController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                 ),
               ],
             ),
           ),
-        );
-      },
-    );
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, 0),
+            child: Text("CANCEL"),
+          ),
+          TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(kPrimaryColor),
+            ),
+            onPressed: () {
+              // Parse the input value from the TextField as an integer
+              int enteredCount = int.tryParse(countController.text) ?? 0;
 
-    return selectedCount;
-  }
+              // Close the dialog and return the entered count value
+              Navigator.pop(context, enteredCount);
+            },
+            child: Text(
+              "DONE",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+
+  return selectedCount;
+}
+
+
+
+  // Future<int> _showReturnDialog(BuildContext context) async {
+  //   final TextEditingController countController = TextEditingController();
+
+  //   int selectedCount = await showDialog<int>(
+  //     context: context,
+  //     builder: (context) {
+  //       return Center(
+  //         child: Container(
+  //           width: MediaQuery.of(context).size.width * 0.8, // 80% of the screen width
+  //         height: MediaQuery.of(context).size.height * 0.4,
+  //           child: AlertDialog(
+  //             insetPadding: EdgeInsets.zero,
+  //                      contentPadding: EdgeInsets.all(10),
+  //                       shape: RoundedRectangleBorder(
+  //                        borderRadius:
+  //                        BorderRadius.all(
+  //                        Radius.circular(10.0))),
+  //             title: Text("Enter the Count that you want to return"),
+  //             content: TextField(
+  //               controller: countController,
+  //               keyboardType: TextInputType.number,
+  //               inputFormatters: <TextInputFormatter>[
+  //                 FilteringTextInputFormatter.digitsOnly,
+  //               ],
+  //             ),
+  //             actions: [
+  //               TextButton(
+  //                 onPressed: () => Navigator.pop(context, 0),
+  //                 child: Text("CANCEL"),
+  //               ),
+  //               TextButton(
+  //                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(kPrimaryColor)),
+  //                 onPressed: () {
+  //                   // Parse the input value from the TextField as an integer
+  //                   int enteredCount = int.tryParse(countController.text) ?? 0;
+                  
+  //                   // Close the dialog and return the entered count value
+  //                   Navigator.pop(context, enteredCount);
+  //                 },
+  //                 child: Text("DONE", style: TextStyle(color: Colors.white),),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+
+  //   return selectedCount;
+  // }

@@ -10,6 +10,9 @@ import 'package:flutter_auth/constants.dart';
 class Addform extends StatelessWidget {
    Addform({Key key}) : super(key: key);
   AddempController empcontroller = Get.put(AddempController());
+  void _handleRoleSelection(String value) {
+    empcontroller.emproleController.value.text = value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,22 +105,22 @@ class Addform extends StatelessWidget {
               ),
             ),
           SizedBox(height: 20),
-           TextFormField(
-             // keyboardType: TextInputType.emailAddress,
-             // textInputAction: TextInputAction.next,
-              cursorColor: kPrimaryColor,
-              controller: empcontroller.emproleController.value,
-             // onSaved: () {},
-              decoration: const InputDecoration(
-                hintText: "Employee Role",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.supervisor_account_outlined),
-                ),
-              ),
-            ),
+          //  TextFormField(
+          //    // keyboardType: TextInputType.emailAddress,
+          //    // textInputAction: TextInputAction.next,
+          //     cursorColor: kPrimaryColor,
+          //     controller: empcontroller.emproleController.value,
+          //    // onSaved: () {},
+          //     decoration: const InputDecoration(
+          //       hintText: "Employee Role",
+          //       prefixIcon: Padding(
+          //         padding: EdgeInsets.all(defaultPadding),
+          //         child: Icon(Icons.supervisor_account_outlined),
+          //       ),
+          //     ),
+          //   ),
             SizedBox(height: 30),
-             Dropdown(),
+             Dropdown(onSelected: _handleRoleSelection,),
 
            /* SizedBox(
                 height: 40,

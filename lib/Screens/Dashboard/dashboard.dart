@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Employees/employeeslist.dart';
 import 'package:flutter_auth/Screens/Saleshistory/saleshistory.dart';
 import 'package:flutter_auth/Services/employeelistcontroller.dart';
+import 'package:flutter_auth/Services/logincontroller.dart';
 import 'package:flutter_auth/Services/soldcontroller.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/navdrawer.dart';
@@ -43,6 +44,8 @@ class SalesSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userName = Get.put(LoginController()).getName;
+
     return Scaffold(
       appBar: buildAppBar(),
       drawer: NavDrawer(),
@@ -55,7 +58,7 @@ class SalesSummaryScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Welcome, User', // Replace 'User' with the actual username
+                  'Welcome, $userName',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -329,4 +332,8 @@ class SalesSummaryScreen extends StatelessWidget {
       ),
     );
   }
+
+
 }
+
+

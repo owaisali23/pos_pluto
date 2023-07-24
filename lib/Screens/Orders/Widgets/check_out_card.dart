@@ -64,7 +64,7 @@ class CheckoutCard extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+          bottom: MediaQuery.of(context).viewInsets.bottom ,
         ),
         child: ListView(
           shrinkWrap: true,

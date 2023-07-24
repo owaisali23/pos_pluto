@@ -201,44 +201,43 @@ class ItemCard extends StatelessWidget {
             //  onPressed: ()// => controller.AddinventApi(),
 
               onPressed: () async{
-            //  int Count = int.tryParse(CountController.text) ?? 0;
-            //  int Warranty = int.tryParse(WarrantyController.text) ?? 0;
-            //  int Price = int.tryParse(PriceController.text) ?? 0;    
+              int Count = int.tryParse(CountController.text) ?? 0;
+              int Warranty = int.tryParse(WarrantyController.text) ?? 0;
+              int Price = int.tryParse(PriceController.text) ?? 0;    
             final String tokenKey = 'auth_token';
             final prefs = await SharedPreferences.getInstance();
             final token = prefs.getString(tokenKey) ?? '';
 
       
   isLoading.value = true;
-  final response = await http.post(Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
-  headers: {
-            'Authorization': token,
-          },
-body: {
-           "productId": "64b96ee202c5a42f4a1fdc38",
-            "count": 14,
-            "price": 1000,
-            "warranty": 1 
-},   
+     final response = await http.post(
+    Uri.parse('https://pos-pluto-server.vercel.app/api/v1/inventory'),
+    headers: {
+      'Authorization': token,
+    },
+    body: {
+      "productId": "64b96ee202c5a42f4a1fdc38",
+      "count": Count,
+      "price": Price,
+      "warranty": Warranty,
+    },
   );
 
-   print (response.statusCode);
-   if (response.statusCode == 200) {
+print('Response Status Code: ${response.statusCode}');
+print('Response Body: ${response.body}');
+print('Response Headers: ${response.headers}');
 
-      isLoading.value = false;
-      print (response.statusCode);
-      print("Product Added to inventory");
-      Get.snackbar("Product Added To Inventory", 'Success');
-    // Get.to(() => EmployeesList());
-}
-  else {
-   // print("Product Adding Failed");
-    //print ();
-    print (response.statusCode);
-   // print(response);
+  if (response.statusCode == 200) {
     isLoading.value = false;
-    Get.snackbar("Error","Please try again");
- }
+    print("Product Added to inventory");
+    Get.snackbar("Product Added To Inventory", 'Success');
+    // Get.to(() => EmployeesList());
+  } else {
+    isLoading.value = false;
+    // Convert the response body to a string to handle integer values.
+    String errorMessage = response.body.toString();
+    Get.snackbar("Error", errorMessage);
+  }
 },
               child: Text(
                 "DONE",
